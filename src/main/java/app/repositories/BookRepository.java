@@ -3,6 +3,7 @@ package app.repositories;
 import app.entities.book.Author;
 import app.entities.book.Book;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,12 +27,11 @@ public class BookRepository {
         return result;
     }
 
-    // TODO: FIX equalsIgnoreCase
-    public Set<Book> findByFullName(String fullName) {
+    public Set<Book> findByFullName(String... names) {
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
             for (Author author : book.getAuthors()) {
-                if (author.getName().equalsIgnoreCase(fullName)) {
+                if (Arrays.stream(names).parallel().allMatch(author.getName()::contains)) {
                     result.add(book);
                     break;
                 }
@@ -39,7 +39,6 @@ public class BookRepository {
         }
         return result;
     }
-
 
     public Set<Book> findByTags(String... tags) {
         Set<Book> result = new HashSet<>();

@@ -57,11 +57,11 @@ public class SearchService {
             throw new IllegalArgumentException("Name in search filter cannot be null or empty.");
         }
 
-        String[] names = authorName.split(" ");
+        String[] names = authorName.trim().split(" ");
         if (names.length == 1) {
             return this.bookRepository.findByName(authorName);
         } else {
-            return this.bookRepository.findByFullName(authorName);
+            return this.bookRepository.findByFullName(names);
         }
     }
 }
