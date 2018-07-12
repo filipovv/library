@@ -44,23 +44,22 @@ public class BorrowQueue {
     }
 
     public PaperBook getPaperBook() {
-        return paperBook;
+        return this.paperBook;
     }
 
     private void setPaperBook(PaperBook paperBook) {
+        if (paperBook == null) {
+            throw new IllegalArgumentException("Paper Book cannot be null.");
+        }
         this.paperBook = paperBook;
     }
 
     public Queue<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Queue<User> users) {
-        this.users = users;
+        return new LinkedList<>(users);
     }
 
     public LocalDate getPickBookDeadline() {
-        return pickBookDeadline;
+        return this.pickBookDeadline;
     }
 
     private void setPickBookDeadline() {

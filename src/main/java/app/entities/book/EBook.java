@@ -1,51 +1,46 @@
 package app.entities.book;
 
-import java.util.Set;
-
 public class EBook extends Book {
-    private String downloadLink;
-    private String readOnlineLink;
+    private static final String EBOOK_TYPE = "Ebook";
 
-    public EBook(EBookBuilder builder) {
-        super(builder);
-        this.downloadLink = builder.downloadLink;
-        this.readOnlineLink = builder.readOnlineLink;
+    private String readOnlineLink;
+    private String downloadLink;
+
+    public EBook(String title, String genre, String isbn, String readOnlineLink, String downloadLink) {
+        super(title, genre, isbn);
+        this.setReadOnlineLink(readOnlineLink);
+        this.setDownloadLink(downloadLink);
     }
 
-    public static class EBookBuilder extends Book.BookBuilder {
-        private String downloadLink;
-        private String readOnlineLink;
+    public EBook(String title, String genre, String isbn, String readOnlineLink) {
+        super(title, genre, isbn);
+        this.setReadOnlineLink(readOnlineLink);
+    }
 
-        public EBookBuilder(String title, String genre, String isbn, Set<String> tags, Set<Author> authors, String downloadLink, String readOnlineLink) {
-            super(title, genre, isbn, tags, authors);
-            this.setDownloadLink(downloadLink);
-            this.setReadOnlineLink(readOnlineLink);
-        }
+    @Override
+    public String getBookType() {
+        return EBOOK_TYPE;
+    }
 
-        private void setDownloadLink(String downloadLink) {
-            if ("".equals(downloadLink) || downloadLink == null) {
-                throw new IllegalArgumentException("Download link of eBook cannot be set null or empty.");
-            }
-            this.downloadLink = downloadLink;
-        }
+    public String getReadOnlineLink() {
+        return this.readOnlineLink;
+    }
 
-        private void setReadOnlineLink(String readOnlineLink) {
-            if ("".equals(downloadLink) || downloadLink == null) {
-                throw new IllegalArgumentException("Read-online link of eBook cannot be set null or empty.");
-            }
-            this.readOnlineLink = readOnlineLink;
+    private void setReadOnlineLink(String readOnlineLink) {
+        if ("".equals(downloadLink) || downloadLink == null) {
+            throw new IllegalArgumentException("Read-online link of eBook cannot be set null or empty.");
         }
-
-        public EBook build() {
-            return new EBook(this);
-        }
+        this.readOnlineLink = readOnlineLink;
     }
 
     public String getDownloadLink() {
         return this.downloadLink;
     }
 
-    public String getReadOnlineLink() {
-        return this.readOnlineLink;
+    private void setDownloadLink(String downloadLink) {
+        if ("".equals(downloadLink) || downloadLink == null) {
+            throw new IllegalArgumentException("Download link of eBook cannot be set null or empty.");
+        }
+        this.downloadLink = downloadLink;
     }
 }

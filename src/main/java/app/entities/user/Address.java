@@ -16,6 +16,9 @@ public class Address {
     }
 
     private void setStreet(String street) {
+        if ("".equals(street) || street == null) {
+            throw new IllegalArgumentException("Name of street in the address cannot be set to null or empty.");
+        }
         this.street = street;
     }
 
@@ -24,6 +27,9 @@ public class Address {
     }
 
     private void setCity(String city) {
+        if ("".equals(city) || city == null) {
+            throw new IllegalArgumentException("Name of city in the address cannot be set to null or empty.");
+        }
         this.city = city;
     }
 
@@ -32,6 +38,9 @@ public class Address {
     }
 
     private void setCountry(String country) {
+        if ("".equals(country) || country == null) {
+            throw new IllegalArgumentException("Name of country in the address cannot be set to null or empty.");
+        }
         this.country = country;
     }
 }

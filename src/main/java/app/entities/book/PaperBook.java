@@ -1,38 +1,15 @@
 package app.entities.book;
 
-import java.util.Set;
-
 public class PaperBook extends Book {
+    private static final String PAPER_BOOK_TYPE = "Ebook";
+
     private int totalCopies;
     private int borrowedCopies;
 
-    public PaperBook(PaperBookBuilder builder) {
-        super(builder);
-        this.totalCopies = builder.totalCopies;
-        this.borrowedCopies = builder.borrowedCopies;
-    }
-
-    public static class PaperBookBuilder extends Book.BookBuilder {
-        private int totalCopies;
-        private int borrowedCopies;
-
-        public PaperBookBuilder(String title, String genre, String isbn, Set<String> tags, Set<Author> authors, int totalCopies, int borrowedCopies) {
-            super(title, genre, isbn, tags, authors);
-            this.setTotalCopies(totalCopies);
-            this.setBorrowedCopies(borrowedCopies);
-        }
-
-        private void setTotalCopies(int totalCopies) {
-            this.totalCopies = totalCopies;
-        }
-
-        private void setBorrowedCopies(int borrowedCopies) {
-            this.borrowedCopies = borrowedCopies;
-        }
-
-        public PaperBook build() {
-            return new PaperBook(this);
-        }
+    public PaperBook(String title, String genre, String isbn, int totalCopies) {
+        super(title, genre, isbn);
+        this.totalCopies = totalCopies;
+        this.setBorrowedCopies();
     }
 
     public void addCopies(int copies) {
@@ -60,11 +37,24 @@ public class PaperBook extends Book {
         this.borrowedCopies -= 1;
     }
 
+    @Override
+    public String getBookType() {
+        return PAPER_BOOK_TYPE;
+    }
+
     public int getTotalCopies() {
         return this.totalCopies;
     }
 
+    private void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
     public int getBorrowedCopies() {
         return this.borrowedCopies;
+    }
+
+    private void setBorrowedCopies() {
+        this.borrowedCopies = 0;
     }
 }

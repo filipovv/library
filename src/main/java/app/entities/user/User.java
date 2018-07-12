@@ -26,6 +26,9 @@ public class User {
     }
 
     private void setCredentials(Credentials credentials) {
+        if (credentials == null) {
+            throw new IllegalArgumentException("Credentials of user cannot be null.");
+        }
         this.credentials = credentials;
     }
 
@@ -34,6 +37,9 @@ public class User {
     }
 
     private void setName(String name) {
+        if ("".equals(name) || name == null) {
+            throw new IllegalArgumentException("Name of user cannot be set to null or empty.");
+        }
         this.name = name;
     }
 
@@ -42,6 +48,9 @@ public class User {
     }
 
     private void setAge(int age) {
+        if (age <= 0) {
+            throw new IllegalArgumentException("Age of user cannot be set to 0 or lower.");
+        }
         this.age = age;
     }
 
@@ -50,6 +59,9 @@ public class User {
     }
 
     private void setGender(Gender gender) {
+        if (gender == null) {
+            throw new IllegalArgumentException("Gender of user cannot be null.");
+        }
         this.gender = gender;
     }
 
@@ -58,6 +70,9 @@ public class User {
     }
 
     private void setEmail(String email) {
+        if ("".equals(email) || email == null) {
+            throw new IllegalArgumentException("Email of user cannot be set to null or empty.");
+        }
         this.email = email;
     }
 
@@ -66,6 +81,9 @@ public class User {
     }
 
     private void setAddress(Address address) {
+        if (address == null) {
+            throw new IllegalArgumentException("Address of user cannot be null.");
+        }
         this.address = address;
     }
 
@@ -74,6 +92,9 @@ public class User {
     }
 
     private void setAgreedGdpr(boolean agreedGdpr) {
-        this.agreedGdpr = agreedGdpr;
+        if (!agreedGdpr) {
+            throw new IllegalArgumentException("User must agree to GDPR to use the library.");
+        }
+        this.agreedGdpr = true;
     }
 }

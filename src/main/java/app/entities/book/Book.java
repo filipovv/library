@@ -1,6 +1,8 @@
 package app.entities.book;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class Book {
@@ -10,78 +12,94 @@ public abstract class Book {
     private Set<String> tags;
     private Set<Author> authors;
 
-    protected Book(BookBuilder builder) {
-        this.title = builder.title;
-        this.genre = builder.genre;
-        this.isbn = builder.isbn;
-        this.tags = builder.tags;
-        this.authors = builder.authors;
+    protected Book(String title, String genre, String isbn) {
+        this.setTitle(title);
+        this.setGenre(genre);
+        this.setIsbn(isbn);
+        this.tags = new HashSet<>();
+        this.authors = new HashSet<>();
     }
 
-    public abstract static class BookBuilder {
-        private String title;
-        private String genre;
-        private String isbn;
-        private Set<String> tags;
-        private Set<Author> authors;
+    public abstract String getBookType();
 
-        protected BookBuilder(String title, String genre, String isbn, Set<String> tags, Set<Author> authors) {
-            this.setTitle(title);
-            this.setGenre(genre);
-            this.setIsbn(isbn);
-            this.setTags(tags);
-            this.setAuthors(authors);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
         }
 
-        private void setTitle(String title) {
-            if ("".equals(title) || title == null) {
-                throw new IllegalArgumentException("Title of the book cannot be set to null or empty.");
-            }
-            this.title = title;
+        if (!(obj instanceof Book)) {
+            return false;
         }
 
-        private void setGenre(String genre) {
-            if ("".equals(genre) || genre == null) {
-                throw new IllegalArgumentException("Genre of the book cannot be set to null or empty.");
-            }
-            this.genre = genre;
-        }
+        Book book = (Book) obj;
+        boolean check = this.getTitle().equalsIgnoreCase(book.getTitle());
+        return check;
+    }
 
-        private void setIsbn(String isbn) {
-            if ("".equals(isbn) || isbn == null) {
-                throw new IllegalArgumentException("ISBN of the book cannot be set to null or empty.");
-            }
-            this.isbn = isbn;
-        }
-
-        private void setTags(Set<String> tags) {
-            this.tags = tags;
-        }
-
-        private void setAuthors(Set<Author> authors) {
-            this.authors = authors;
-        }
-
-        public abstract Book build();
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getTitle());
     }
 
     public String getTitle() {
         return this.title;
     }
 
+    private void setTitle(String title) {
+        if ("".equals(title) || title == null) {
+            throw new IllegalArgumentException("Title of the book cannot be set to null or empty.");
+        }
+        this.title = title;
+    }
+
     public String getGenre() {
         return this.genre;
+    }
+
+    private void setGenre(String genre) {
+        if ("".equals(genre) || genre == null) {
+            throw new IllegalArgumentException("Genre of the book cannot be set to null or empty.");
+        }
+        this.genre = genre;
     }
 
     public String getIsbn() {
         return this.isbn;
     }
 
+    private void setIsbn(String isbn) {
+        if ("".equals(isbn) || isbn == null) {
+            throw new IllegalArgumentException("ISBN of the book cannot be set to null or empty.");
+        }
+        this.isbn = isbn;
+    }
+
     public Set<String> getTags() {
         return new HashSet<>(this.tags);
     }
 
+    private void addTags(String... tags) {
+        for (String tag : tags) {
+            if ("".equals(tag) || tag == null) {
+                throw new IllegalArgumentException("Tag cannot be null or empty.");
+            }
+
+            this.tags.add(tag);
+        }
+    }
+
     public Set<Author> getAuthors() {
         return new HashSet<>(this.authors);
+    }
+
+    private void addAuthors(Author... authors) {
+        for (Author author : authors) {
+            if (author == null) {
+                throw new IllegalArgumentException("Author cannot be null.");
+            }
+
+            this.authors.add(author);
+        }
     }
 }

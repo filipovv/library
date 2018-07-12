@@ -22,6 +22,9 @@ public class HistoryEntry {
     }
 
     private void setStatus(Status status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status of history entry cannot be set to null.");
+        }
         this.status = status;
     }
 
@@ -30,6 +33,9 @@ public class HistoryEntry {
     }
 
     private void setBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book in history cannot be set to null.");
+        }
         this.book = book;
     }
 
@@ -38,6 +44,9 @@ public class HistoryEntry {
     }
 
     private void setEntryDate(LocalDate entryDate) {
+        if (entryDate == null) {
+            throw new IllegalArgumentException("Entry date in history cannot be set to null.");
+        }
         this.entryDate = entryDate;
     }
 }
