@@ -4,10 +4,7 @@ import app.entities.book.Book;
 import app.entities.enums.Status;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class UserHistory {
     private User user;
@@ -16,7 +13,7 @@ public class UserHistory {
 
     public UserHistory(User user) {
         this.setUser(user);
-        this.historyEntries = new ArrayList<>();
+        this.historyEntries = new LinkedList<>();
         this.currentlyBorrowed = new HashSet<>();
     }
 
@@ -76,7 +73,7 @@ public class UserHistory {
     }
 
     public List<HistoryEntry> getHistoryEntries() {
-        return new ArrayList<>(this.historyEntries);
+        return new LinkedList<>(this.historyEntries);
     }
 
     public Set<BorrowBookEntry> getCurrentlyBorrowed() {

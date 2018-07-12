@@ -1,7 +1,7 @@
 package app.entities.book;
 
 public class PaperBook extends Book {
-    private static final String PAPER_BOOK_TYPE = "Ebook";
+    private static final String PAPER_BOOK_TYPE = "PaperBook";
 
     private int totalCopies;
     private int borrowedCopies;
@@ -35,6 +35,23 @@ public class PaperBook extends Book {
             throw new IllegalArgumentException("Cannot return more copies than the total amount for the book.");
         }
         this.borrowedCopies -= 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("-- EBook Info --%nTitle: %s%nGenre: %s%nISBN: %s%nAuthors: %n",
+                super.getTitle(), super.getGenre(), super.getIsbn()));
+        for (Author author : super.getAuthors()) {
+            sb.append(String.format("- Author name: %s%n", author.getName()));
+        }
+        sb.append("Availability for borrow: ");
+        if (totalCopies > borrowedCopies) {
+            sb.append("Yes! Request now!");
+        } else {
+            sb.append("No. Must wait in queue!");
+        }
+        return sb.toString();
     }
 
     @Override

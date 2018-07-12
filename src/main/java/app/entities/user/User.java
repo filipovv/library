@@ -2,6 +2,8 @@ package app.entities.user;
 
 import app.entities.enums.Gender;
 
+import java.util.Objects;
+
 public class User {
     private Credentials credentials;
     private String name;
@@ -19,6 +21,31 @@ public class User {
         this.setEmail(email);
         this.setAddress(address);
         this.setAgreedGdpr(agreedGdpr);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof User)) {
+            return false;
+        }
+
+        User user = (User) obj;
+        boolean check = this.getCredentials().getUsername().equals(user.getCredentials().getUsername()) && this.getEmail().equals(user.getEmail());
+        return check;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getCredentials().getUsername(), this.getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("-- User Info --%nName: %s%nAge: %d%nGender: %s%nE-mail: %s%n", this.getName(), this.getAge(), this.getGender(), this.getEmail());
     }
 
     public Credentials getCredentials() {

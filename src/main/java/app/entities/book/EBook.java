@@ -22,6 +22,21 @@ public class EBook extends Book {
         return EBOOK_TYPE;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("-- EBook Info --%nTitle: %s%nGenre: %s%nISBN: %s%nAuthors: %n",
+                super.getTitle(), super.getGenre(), super.getIsbn()));
+        for (Author author : super.getAuthors()) {
+            sb.append(String.format("- Author name: %s%n", author.getName()));
+        }
+        sb.append(String.format("Read-online Link: %s%n", this.readOnlineLink));
+        if (this.downloadLink != null) {
+            sb.append(String.format("Download Link: %s%n", this.downloadLink));
+        }
+        return sb.toString();
+    }
+
     public String getReadOnlineLink() {
         return this.readOnlineLink;
     }
