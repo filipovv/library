@@ -78,12 +78,12 @@ public class BookController {
         this.borrowService.borrowBook(user, book);
     }
 
-    public Set<Book> search(String sessionId, String filter, String... values) {
+    public Set<Book> search(String sessionId, String filter, String value) {
         if (!this.authorisationService.validateId(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
-        return this.searchService.search(filter, values);
+        return this.searchService.search(filter, value);
     }
 
     public String getBookInfo(String sessionId, Book book) {
