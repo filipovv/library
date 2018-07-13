@@ -45,7 +45,8 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("-- User Info --%nName: %s%nAge: %d%nGender: %s%nE-mail: %s%n", this.getName(), this.getAge(), this.getGender(), this.getEmail());
+        return String.format("-- User Info --%nName: %s%nAge: %d%nGender: %s%nE-mail: %s%n",
+                this.getName(), this.getAge(), this.getGender(), this.getEmail());
     }
 
     public Credentials getCredentials() {

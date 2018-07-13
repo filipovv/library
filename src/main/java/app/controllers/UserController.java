@@ -1,60 +1,51 @@
 package app.controllers;
 
-import app.Session;
 import app.entities.user.Credentials;
 import app.entities.user.User;
 import app.repositories.UserRepository;
+import app.services.AuthorisationService;
 import app.services.ProfileService;
 
 public class UserController {
-    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
     private UserRepository userRepository;
     private ProfileService profileService;
-    private Session session;
+    private AuthorisationService authorisationService;
 
-    // TODO: ADD VALIDATION FOR SESSION ID;
-
-    public UserController(UserRepository userRepository, ProfileService profileService) {
+    public UserController(UserRepository userRepository, ProfileService profileService, AuthorisationService authorisationService) {
         this.userRepository = userRepository;
         this.profileService = profileService;
+        this.authorisationService = authorisationService;
     }
 
     public void registerUser(User user) {
-        if (this.userRepository.isAlreadyRegistered(user.getCredentials())) {
-            throw new IllegalArgumentException("User with that username already registered.");
-        }
-
-        this.userRepository.addUser(user);
+        this.authorisationService.registerUser(user);
     }
 
     public void login(Credentials credentials) {
-        User user = this.userRepository.findUserByCredentials(credentials);
-        String sessionId = this.generateSessionId();
-        Session session = new Session(sessionId, user);
-        this.session = session;
+        this.authorisationService.login(credentials);
     }
 
-    public String getUserHistory(User user) {
+    public String getUserHistory(String sessionId, User user) {
+        if ("".equals(sessionId) || sessionId == null) {
+            throw new IllegalArgumentException("Missing sessionId. User not logged in.");
+        }
+
+        if (!this.authorisationService.getSession().getId().equals(sessionId)) {
+            throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
+        }
+
         return this.profileService.getHistoryByUser(user);
     }
 
-    public String getUserInfo(User user) {
-        return this.profileService.getUserInfo(user);
-    }
-
-    private String generateSessionId() {
-        StringBuilder builder = new StringBuilder();
-        int count = ALPHA_NUMERIC_STRING.length();
-        while (count-- != 0) {
-            int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
-            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+    public String getUserInfo(String sessionId, User user) {
+        if ("".equals(sessionId) || sessionId == null) {
+            throw new IllegalArgumentException("Missing sessionId. User not logged in.");
         }
 
-        return builder.toString();
-    }
+        if (!this.authorisationService.getSession().getId().equals(sessionId)) {
+            throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
+        }
 
-    public Session getSession() {
-        return this.session;
+        return this.profileService.getUserInfo(user);
     }
 }

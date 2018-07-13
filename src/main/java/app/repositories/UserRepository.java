@@ -49,10 +49,10 @@ public class UserRepository {
         return currentUser;
     }
 
-    public boolean isAlreadyRegistered(Credentials credentials) {
+    public boolean isAlreadyRegistered(User user) {
         boolean isRegistered = false;
-        for (User user : users) {
-            if (user.getCredentials().equals(credentials)) {
+        for (User entry : this.users) {
+            if (entry.getCredentials().equals(user.getCredentials()) || entry.getEmail().equals(user.getEmail())) {
                 isRegistered = true;
                 break;
             }
