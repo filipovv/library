@@ -45,6 +45,9 @@ public class BookRepository {
     }
 
     public Set<Book> findByGenre(String genre) {
+        if ("".equals(genre) || genre == null) {
+            throw new IllegalArgumentException("Genre in search filter must not be null or empty.");
+        }
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
             if (book.getGenre().equalsIgnoreCase(genre)) {
@@ -56,6 +59,9 @@ public class BookRepository {
     }
 
     public Set<Book> findByTitle(String title) {
+        if ("".equals(title) || title == null) {
+            throw new IllegalArgumentException("Title in search filter must not be null or empty.");
+        }
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
             if (book.getTitle().contains(title)) {

@@ -21,6 +21,10 @@ public class HistoryRepository {
     }
 
     public UserHistory getHistoryByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("Cannot search history for null user.");
+        }
+
         UserHistory entry = null;
 
         for (UserHistory userHistory : historySet) {

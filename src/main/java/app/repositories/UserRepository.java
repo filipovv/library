@@ -34,6 +34,9 @@ public class UserRepository {
     }
 
     public User findUserByCredentials(Credentials credentials) {
+        if (credentials == null) {
+            throw new IllegalArgumentException("Credentials parameter cannot be null to complete operation.");
+        }
         User currentUser = null;
 
         for (User user : users) {
@@ -50,6 +53,9 @@ public class UserRepository {
     }
 
     public boolean isAlreadyRegistered(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User parameter cannot be null to complete operation.");
+        }
         boolean isRegistered = false;
         for (User entry : this.users) {
             if (entry.getCredentials().equals(user.getCredentials()) || entry.getEmail().equals(user.getEmail())) {
