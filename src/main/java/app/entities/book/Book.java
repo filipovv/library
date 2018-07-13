@@ -21,7 +21,7 @@ public abstract class Book {
         this.authors = new HashSet<>();
     }
 
-    public abstract String getBookType();
+    protected abstract String getBookType();
 
     @Override
     public boolean equals(Object obj) {

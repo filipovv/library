@@ -14,6 +14,14 @@ public class UserController {
         this.authorisationService = authorisationService;
     }
 
+    public void logout(String sessionId) {
+        if (!this.authorisationService.validateSession(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
+        }
+
+        this.authorisationService.deleteCurrentSession();
+    }
+
     public void registerUser(User user) {
         this.authorisationService.registerUser(user);
     }
@@ -23,7 +31,7 @@ public class UserController {
     }
 
     public String getUserHistory(String sessionId) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -32,7 +40,7 @@ public class UserController {
     }
 
     public String getUserInfo(String sessionId) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 

@@ -16,7 +16,15 @@ public class AuthorisationService {
         this.session = session;
     }
 
-    public boolean validateId(String id) {
+    public void deleteCurrentSession() {
+        this.session = null;
+    }
+
+    public boolean validateSession(String id) {
+        if (this.session == null) {
+            throw new IllegalArgumentException("Current session has expired or user logged out.");
+        }
+
         boolean flag = true;
 
         if ("".equals(id) || id == null) {

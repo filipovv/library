@@ -72,7 +72,7 @@ public class BorrowBookEntry {
 
     private void setReturnDate() {
         if (returnDate == null) {
-            throw new IllegalArgumentException("Reaturn date cannot be set to null.");
+            throw new IllegalArgumentException("Return date cannot be set to null.");
         }
         this.returnDate = getBorrowDate().plusDays(14);
     }

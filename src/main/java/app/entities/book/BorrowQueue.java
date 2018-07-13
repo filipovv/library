@@ -36,7 +36,8 @@ public class BorrowQueue {
         if (this.users.size() == 0) {
             throw new IllegalArgumentException("Queue is empty.");
         }
-        User user = this.users.poll();
+        this.users.poll();
+        User user = this.users.peek();
         if (this.users.size() != 0) {
             this.setPickBookDeadline();
         }

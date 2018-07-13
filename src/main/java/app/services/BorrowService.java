@@ -82,6 +82,13 @@ public class BorrowService {
         }
     }
 
+    // TODO: Check if a queue for this book exists and if it does - notify next user in line that book is available for borrow.
+
+    public String notifyBorrowAvailable(BorrowQueue borrowQueue) {
+        return String.format("The book %s is available for borrow until %s!%n",
+                borrowQueue.getPaperBook().getTitle(), borrowQueue.getPickBookDeadline());
+    }
+
     public void returnBook(User user, Book book) {
         if (!this.validatePaperBook(book)) {
             throw new IllegalArgumentException("Paper book validation failed.");
@@ -96,6 +103,14 @@ public class BorrowService {
                 for (BorrowBookEntry borrowBookEntry : userHistory.getCurrentlyBorrowed()) {
                     if (borrowBookEntry.getBook().equals(book)) {
                         userHistory.returnBook(book);
+                        BorrowQueue queue = this.queueRepository.findQueueByBook(book);
+                        if (queue != null) {
+                            User nextInQueue = queue.nextUser();
+                            if (nextInQueue != null) {
+                                this.notifyBorrowAvailable(queue);
+                            }
+                        }
+
                         break USER_LOOP;
                     }
                 }

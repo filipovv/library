@@ -4,17 +4,14 @@ import app.entities.user.HistoryEntry;
 import app.entities.user.User;
 import app.entities.user.UserHistory;
 import app.repositories.HistoryRepository;
-import app.repositories.UserRepository;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class UserService {
-    private UserRepository userRepository;
     private HistoryRepository historyRepository;
 
-    public UserService(UserRepository userRepository, HistoryRepository historyRepository) {
-        this.userRepository = userRepository;
+    public UserService(HistoryRepository historyRepository) {
         this.historyRepository = historyRepository;
     }
 

@@ -11,7 +11,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public boolean validateEBook(Book book) {
+    private boolean validateEBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Book must not be null.");
         }

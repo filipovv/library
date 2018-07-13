@@ -2,7 +2,6 @@ package app.repositories;
 
 import app.entities.book.Book;
 import app.entities.book.BorrowQueue;
-import app.entities.book.PaperBook;
 
 import java.time.LocalDate;
 import java.util.HashSet;

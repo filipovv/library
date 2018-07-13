@@ -23,7 +23,7 @@ public class BookController {
     }
 
     public String getDownloadLink(String sessionId, Book book) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -31,7 +31,7 @@ public class BookController {
     }
 
     public String getOnlineLink(String sessionId, Book book) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -39,7 +39,7 @@ public class BookController {
     }
 
     public void borrowPostponement(String sessionId, Book book, int postponeDays) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -48,7 +48,7 @@ public class BookController {
     }
 
     public void applyForQueue(String sessionId, Book book) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -57,7 +57,7 @@ public class BookController {
     }
 
     public void returnBook(String sessionId, Book book) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -66,7 +66,7 @@ public class BookController {
     }
 
     public void borrowBook(String sessionId, Book book) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -75,7 +75,7 @@ public class BookController {
     }
 
     public Set<Book> search(String sessionId, String filter, String value) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
@@ -83,7 +83,7 @@ public class BookController {
     }
 
     public String getBookInfo(String sessionId, Book book) {
-        if (!this.authorisationService.validateId(sessionId)) {
+        if (!this.authorisationService.validateSession(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
