@@ -33,7 +33,7 @@ public class BookRepository {
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
             for (Author author : book.getAuthors()) {
-                if (Arrays.stream(names).parallel().allMatch(author.getName()::contains)) {
+                if (Arrays.stream(names).parallel().allMatch(x -> author.getName().contains(x))) {
                     result.add(book);
                     break;
                 }

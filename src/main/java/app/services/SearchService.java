@@ -57,7 +57,7 @@ public class SearchService {
             throw new IllegalArgumentException("Name in search filter cannot be null or empty.");
         }
 
-        String[] names = authorName.trim().split(" ");
+        String[] names = authorName.trim().toLowerCase().split(" ");
         if (names.length == 1) {
             return this.bookRepository.findByName(authorName);
         } else {

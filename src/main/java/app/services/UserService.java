@@ -9,11 +9,11 @@ import app.repositories.UserRepository;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ProfileService {
+public class UserService {
     private UserRepository userRepository;
     private HistoryRepository historyRepository;
 
-    public ProfileService(UserRepository userRepository, HistoryRepository historyRepository) {
+    public UserService(UserRepository userRepository, HistoryRepository historyRepository) {
         this.userRepository = userRepository;
         this.historyRepository = historyRepository;
     }

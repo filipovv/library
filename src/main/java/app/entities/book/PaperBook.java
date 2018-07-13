@@ -12,6 +12,10 @@ public class PaperBook extends Book {
         this.setBorrowedCopies();
     }
 
+    public int availableCopies() {
+        return this.totalCopies - this.borrowedCopies;
+    }
+
     public void addCopies(int copies) {
         this.totalCopies += copies;
     }

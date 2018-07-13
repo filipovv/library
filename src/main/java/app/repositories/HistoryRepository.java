@@ -13,6 +13,13 @@ public class HistoryRepository {
         this.historySet = new HashSet<>();
     }
 
+    public void addUserHistory(UserHistory history) {
+        if (history == null) {
+            throw new IllegalArgumentException("Cannot add null to history repository.");
+        }
+        this.historySet.add(history);
+    }
+
     public UserHistory getHistoryByUser(User user) {
         UserHistory entry = null;
 

@@ -52,7 +52,7 @@ public class UserHistory {
         this.currentlyBorrowed.add(entry);
     }
 
-    private BorrowBookEntry findBorrowEntryByBook(Book book) {
+    public BorrowBookEntry findBorrowEntryByBook(Book book) {
         BorrowBookEntry borrowBookEntry = this.currentlyBorrowed.stream()
                 .filter(x -> x.getBook().equals(book))
                 .findFirst()

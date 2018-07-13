@@ -4,16 +4,18 @@ import app.entities.user.Credentials;
 import app.entities.user.User;
 import app.repositories.UserRepository;
 import app.services.AuthorisationService;
-import app.services.ProfileService;
+import app.services.UserService;
 
 public class UserController {
     private UserRepository userRepository;
-    private ProfileService profileService;
+    private UserService userService;
     private AuthorisationService authorisationService;
 
-    public UserController(UserRepository userRepository, ProfileService profileService, AuthorisationService authorisationService) {
+    // TODO: FIX PARAMETER DUPLICATION WITH VALIDATION!
+
+    public UserController(UserRepository userRepository, UserService userService, AuthorisationService authorisationService) {
         this.userRepository = userRepository;
-        this.profileService = profileService;
+        this.userService = userService;
         this.authorisationService = authorisationService;
     }
 
@@ -25,7 +27,7 @@ public class UserController {
         this.authorisationService.login(credentials);
     }
 
-    public String getUserHistory(String sessionId, User user) {
+    public String getUserHistory(String sessionId) {
         if ("".equals(sessionId) || sessionId == null) {
             throw new IllegalArgumentException("Missing sessionId. User not logged in.");
         }
@@ -34,10 +36,11 @@ public class UserController {
             throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
         }
 
-        return this.profileService.getHistoryByUser(user);
+        User user = this.authorisationService.getSession().getUser();
+        return this.userService.getHistoryByUser(user);
     }
 
-    public String getUserInfo(String sessionId, User user) {
+    public String getUserInfo(String sessionId) {
         if ("".equals(sessionId) || sessionId == null) {
             throw new IllegalArgumentException("Missing sessionId. User not logged in.");
         }
@@ -46,6 +49,7 @@ public class UserController {
             throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
         }
 
-        return this.profileService.getUserInfo(user);
+        User user = this.authorisationService.getSession().getUser();
+        return this.userService.getUserInfo(user);
     }
 }
