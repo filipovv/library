@@ -27,6 +27,30 @@ public class BookController {
         this.authorisationService = authorisationService;
     }
 
+    public String getDownloadLink(String sessionId, Book book) {
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
+        }
+
+        if (book == null) {
+            throw new IllegalArgumentException("Cannot return null as book.");
+        }
+
+        return this.bookService.getDownloadLink(book);
+    }
+
+    public String getOnlineLink(String sessionId, Book book) {
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
+        }
+
+        if (book == null) {
+            throw new IllegalArgumentException("Cannot return null as book.");
+        }
+
+        return this.bookService.getOnlineLink(book);
+    }
+
     public void borrowPostponement(String sessionId, Book book, int postponeDays) {
         if (!this.authorisationService.validateId(sessionId)) {
             throw new IllegalArgumentException("Session Id validation failed.");
@@ -95,11 +119,7 @@ public class BookController {
             throw new IllegalArgumentException("Book must not be null to get info for it.");
         }
 
-        if (book instanceof EBook) {
-            return this.bookService.getEBookInfo((EBook) book);
-        } else {
-            return this.bookService.getPaperBookInfo((PaperBook) book);
-        }
+        return this.bookService.getBookInfo(book);
     }
 
 }

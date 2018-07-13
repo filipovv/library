@@ -36,6 +36,10 @@ public class UserService {
     }
 
     public String getUserInfo(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User must not be null.");
+        }
+
         return user.toString();
     }
 }
