@@ -33,13 +33,13 @@ public abstract class Book {
         }
 
         Book book = (Book) obj;
-        boolean check = this.getTitle().equalsIgnoreCase(book.getTitle());
+        boolean check = this.getTitle().equals(book.getTitle()) && this.getBookType().equals(book.getBookType());
         return check;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getTitle());
+        return Objects.hash(this.getTitle(), this.getBookType());
     }
 
     public String getTitle() {

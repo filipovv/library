@@ -2,6 +2,8 @@ package app.repositories;
 
 import app.entities.book.Author;
 import app.entities.book.Book;
+import app.entities.book.EBook;
+import app.entities.book.PaperBook;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -80,12 +82,25 @@ public class BookRepository {
     public void addBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Cannot add a null as book to repository.");
-        } else if (this.books.contains(book)) {
-            // TODO: FIX THIS FFS!
-            throw new IllegalArgumentException("Book already exists in the repository.");
         }
+        if (this.books.contains(book)) {
+            if (book instanceof EBook) {
+                throw new IllegalArgumentException("EBook already exists in the repository.");
+            }
+            Book newBook = null;
+            for (Book entry : this.books) {
+                if (entry.equals(book)) {
+                    newBook = entry;
+                    break;
+                }
+            }
 
-        this.books.add(book);
+            this.books.remove(newBook);
+            ((PaperBook) newBook).addCopies(1);
+            this.books.add(newBook);
+        } else {
+            this.books.add(book);
+        }
     }
 
     public void removeBook(Book book) {
