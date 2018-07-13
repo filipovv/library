@@ -39,6 +39,10 @@ public class BorrowService {
     }
 
     private boolean validatePaperBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book must not be null.");
+        }
+
         boolean flag = true;
         if (!(book instanceof PaperBook)) {
             flag = false;

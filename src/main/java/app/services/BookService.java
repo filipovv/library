@@ -11,9 +11,26 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public String getDownloadLink(Book book) {
+    public boolean validateEBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book must not be null.");
+        }
+
+        boolean flag = true;
         if (!(book instanceof EBook)) {
-            throw new IllegalArgumentException("Cannot return read-online link for non-electronic books.");
+            flag = false;
+        }
+
+        if (!this.bookRepository.getBooks().contains(book)) {
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    public String getDownloadLink(Book book) {
+        if (!this.validateEBook(book)) {
+            throw new IllegalArgumentException("EBook validation failed.");
         }
 
         String result = null;
@@ -34,8 +51,8 @@ public class BookService {
     }
 
     public String getOnlineLink(Book book) {
-        if (!(book instanceof EBook)) {
-            throw new IllegalArgumentException("Cannot return read-online link for non-electronic books.");
+        if (!this.validateEBook(book)) {
+            throw new IllegalArgumentException("EBook validation failed.");
         }
 
         String result = null;
@@ -53,6 +70,10 @@ public class BookService {
     }
 
     public String getBookInfo(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book must not be null to get info for it.");
+        }
+
         return book.toString();
     }
 }
