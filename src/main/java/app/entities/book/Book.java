@@ -1,6 +1,5 @@
 package app.entities.book;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -8,13 +7,15 @@ import java.util.Set;
 public abstract class Book {
     private String title;
     private String genre;
+    private String summary;
     private String isbn;
     private Set<String> tags;
     private Set<Author> authors;
 
-    protected Book(String title, String genre, String isbn) {
+    protected Book(String title, String genre, String summary, String isbn) {
         this.setTitle(title);
         this.setGenre(genre);
+        this.setSummary(summary);
         this.setIsbn(isbn);
         this.tags = new HashSet<>();
         this.authors = new HashSet<>();
@@ -62,6 +63,14 @@ public abstract class Book {
             throw new IllegalArgumentException("Genre of the book cannot be set to null or empty.");
         }
         this.genre = genre;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    private void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getIsbn() {

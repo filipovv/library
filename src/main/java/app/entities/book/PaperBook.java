@@ -6,8 +6,8 @@ public class PaperBook extends Book {
     private int totalCopies;
     private int borrowedCopies;
 
-    public PaperBook(String title, String genre, String isbn, int totalCopies) {
-        super(title, genre, isbn);
+    public PaperBook(String title, String genre, String summary, String isbn, int totalCopies) {
+        super(title, genre, summary, isbn);
         this.totalCopies = totalCopies;
         this.setBorrowedCopies();
     }

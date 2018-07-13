@@ -27,13 +27,34 @@ public class BookController {
         this.authorisationService = authorisationService;
     }
 
-    public void returnBook(String sessionId, Book book) {
-        if ("".equals(sessionId) || sessionId == null) {
-            throw new IllegalArgumentException("Missing sessionId. User not logged in.");
+    public void borrowPostponement(String sessionId, Book book, int postponeDays) {
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
         }
 
-        if (!this.authorisationService.getSession().getId().equals(sessionId)) {
-            throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
+        if (book == null) {
+            throw new IllegalArgumentException("Cannot return null as book.");
+        }
+
+        User user = this.authorisationService.getSession().getUser();
+        this.borrowService.postponeReturn(user, book, postponeDays);
+    }
+
+    public void applyForQueue(String sessionId, Book book) {
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
+        }
+
+        if (book == null) {
+            throw new IllegalArgumentException("Cannot return null as book.");
+        }
+        User user = this.authorisationService.getSession().getUser();
+        this.borrowService.waitInQueue(user, book);
+    }
+
+    public void returnBook(String sessionId, Book book) {
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
         }
 
         if (book == null) {
@@ -45,12 +66,8 @@ public class BookController {
     }
 
     public void borrowBook(String sessionId, Book book) {
-        if ("".equals(sessionId) || sessionId == null) {
-            throw new IllegalArgumentException("Missing sessionId. User not logged in.");
-        }
-
-        if (!this.authorisationService.getSession().getId().equals(sessionId)) {
-            throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
         }
 
         if (book == null) {
@@ -62,23 +79,16 @@ public class BookController {
     }
 
     public Set<Book> search(String sessionId, String filter, String... values) {
-        if ("".equals(sessionId) || sessionId == null) {
-            throw new IllegalArgumentException("Missing sessionId. User not logged in.");
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
         }
 
-        if (!this.authorisationService.getSession().getId().equals(sessionId)) {
-            throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
-        }
         return this.searchService.search(filter, values);
     }
 
     public String getBookInfo(String sessionId, Book book) {
-        if ("".equals(sessionId) || sessionId == null) {
-            throw new IllegalArgumentException("Missing sessionId. User not logged in.");
-        }
-
-        if (!this.authorisationService.getSession().getId().equals(sessionId)) {
-            throw new IllegalArgumentException("No permission to see this page. SessionId does not match.");
+        if (!this.authorisationService.validateId(sessionId)) {
+            throw new IllegalArgumentException("Session Id validation failed.");
         }
 
         if (book == null) {

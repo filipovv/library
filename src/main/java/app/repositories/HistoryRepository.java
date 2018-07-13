@@ -36,6 +36,6 @@ public class HistoryRepository {
     }
 
     public Set<UserHistory> getHistorySet() {
-        return new HashSet<>(historySet);
+        return this.historySet;
     }
 }

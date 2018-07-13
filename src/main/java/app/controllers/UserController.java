@@ -11,8 +11,6 @@ public class UserController {
     private UserService userService;
     private AuthorisationService authorisationService;
 
-    // TODO: FIX PARAMETER DUPLICATION WITH VALIDATION!
-
     public UserController(UserRepository userRepository, UserService userService, AuthorisationService authorisationService) {
         this.userRepository = userRepository;
         this.userService = userService;
@@ -23,8 +21,8 @@ public class UserController {
         this.authorisationService.registerUser(user);
     }
 
-    public void login(Credentials credentials) {
-        this.authorisationService.login(credentials);
+    public String login(Credentials credentials) {
+        return this.authorisationService.login(credentials);
     }
 
     public String getUserHistory(String sessionId) {

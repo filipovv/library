@@ -10,10 +10,10 @@ public class BorrowBookEntry {
     private LocalDate borrowDate;
     private LocalDate returnDate;
 
-    public BorrowBookEntry(Book book, LocalDate borrowDate, LocalDate returnDate) {
+    public BorrowBookEntry(Book book) {
         this.setBook(book);
-        this.setBorrowDate(borrowDate);
-        this.setReturnDate(returnDate);
+        this.setBorrowDate();
+        this.setReturnDate();
     }
 
     public void postpone(int postponeDays) {
@@ -59,21 +59,21 @@ public class BorrowBookEntry {
         return this.borrowDate;
     }
 
-    private void setBorrowDate(LocalDate borrowDate) {
+    private void setBorrowDate() {
         if (borrowDate == null) {
             throw new IllegalArgumentException("Borrow date cannot be set to null.");
         }
-        this.borrowDate = borrowDate;
+        this.borrowDate = LocalDate.now();
     }
 
     public LocalDate getReturnDate() {
         return this.returnDate;
     }
 
-    private void setReturnDate(LocalDate returnDate) {
+    private void setReturnDate() {
         if (returnDate == null) {
             throw new IllegalArgumentException("Reaturn date cannot be set to null.");
         }
-        this.returnDate = returnDate;
+        this.returnDate = getBorrowDate().plusDays(14);
     }
 }

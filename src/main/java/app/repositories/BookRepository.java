@@ -16,20 +16,7 @@ public class BookRepository {
         this.books = new HashSet<>();
     }
 
-    public Set<Book> findByName(String name) {
-        Set<Book> result = new HashSet<>();
-        for (Book book : this.books) {
-            for (Author author : book.getAuthors()) {
-                if (author.getName().contains(name)) {
-                    result.add(book);
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    public Set<Book> findByFullName(String... names) {
+    public Set<Book> findByName(String... names) {
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
             for (Author author : book.getAuthors()) {

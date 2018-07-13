@@ -6,14 +6,14 @@ public class EBook extends Book {
     private String readOnlineLink;
     private String downloadLink;
 
-    public EBook(String title, String genre, String isbn, String readOnlineLink, String downloadLink) {
-        super(title, genre, isbn);
+    public EBook(String title, String genre, String summary, String isbn, String readOnlineLink, String downloadLink) {
+        super(title, genre, summary, isbn);
         this.setReadOnlineLink(readOnlineLink);
         this.setDownloadLink(downloadLink);
     }
 
-    public EBook(String title, String genre, String isbn, String readOnlineLink) {
-        super(title, genre, isbn);
+    public EBook(String title, String genre, String summary, String isbn, String readOnlineLink) {
+        super(title, genre, summary, isbn);
         this.setReadOnlineLink(readOnlineLink);
     }
 

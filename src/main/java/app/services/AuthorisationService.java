@@ -16,6 +16,20 @@ public class AuthorisationService {
         this.session = session;
     }
 
+    public boolean validateId(String id) {
+        boolean flag = true;
+
+        if ("".equals(id) || id == null) {
+            flag = false;
+        }
+
+        if (!this.getSession().getId().equals(id)) {
+            flag = false;
+        }
+
+        return flag;
+    }
+
     public void registerUser(User user) {
         if (this.userRepository.isAlreadyRegistered(user)) {
             throw new IllegalArgumentException("User with that username or email already registered.");
@@ -27,11 +41,12 @@ public class AuthorisationService {
         this.userRepository.addUser(user);
     }
 
-    public void login(Credentials credentials) {
+    public String login(Credentials credentials) {
         User user = this.userRepository.findUserByCredentials(credentials);
         String sessionId = this.generateSessionId();
         Session session = new Session(sessionId, user);
         this.session = session;
+        return session.getId();
     }
 
     private String generateSessionId() {

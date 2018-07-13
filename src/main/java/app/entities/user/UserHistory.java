@@ -48,7 +48,7 @@ public class UserHistory {
         if (entry != null) {
             throw new IllegalArgumentException("Book already borrowed.");
         }
-        entry = new BorrowBookEntry(book, LocalDate.now(), LocalDate.now().plusDays(14));
+        entry = new BorrowBookEntry(book);
         this.currentlyBorrowed.add(entry);
     }
 
