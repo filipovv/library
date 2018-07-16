@@ -21,17 +21,17 @@ public class SearchService {
             throw new IllegalArgumentException("Search value cannot be empty or null.");
         }
 
-        switch (filter) {
+        switch (filter.toLowerCase()) {
             case "title":
                 return this.searchByTitle(value);
             case "genre":
                 return this.searchByGenre(value);
             case "tag":
                 return this.searchByTags(value);
-            case "authorName":
+            case "authorname":
                 return this.searchByAuthorName(value);
             default:
-                return null;
+                throw new IllegalArgumentException("No such tag filer.");
         }
     }
 

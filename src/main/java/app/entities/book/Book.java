@@ -107,7 +107,7 @@ public abstract class Book {
         return this.tags;
     }
 
-    private void addTags(String... tags) {
+    public void addTags(String... tags) {
         for (String tag : tags) {
             if ("".equals(tag) || tag == null) {
                 throw new IllegalArgumentException("Tag cannot be null or empty.");
@@ -121,7 +121,7 @@ public abstract class Book {
         return this.authors;
     }
 
-    private void addAuthors(Author... authors) {
+    public void addAuthors(Author... authors) {
         for (Author author : authors) {
             if (author == null) {
                 throw new IllegalArgumentException("Author cannot be null.");

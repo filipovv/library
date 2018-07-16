@@ -17,10 +17,13 @@ public class BookRepository {
     }
 
     public Set<Book> findByName(String... names) {
+        if (names.length == 0) {
+            throw new IllegalArgumentException("To search with names you need more than 1 name to search with.");
+        }
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
             for (Author author : book.getAuthors()) {
-                if (Arrays.stream(names).parallel().allMatch(x -> author.getName().contains(x))) {
+                if (Arrays.stream(names).allMatch(x -> author.getName().toLowerCase().contains(x))) {
                     result.add(book);
                     break;
                 }
@@ -30,13 +33,16 @@ public class BookRepository {
     }
 
     public Set<Book> findByTags(String... tags) {
+        if (tags.length == 0) {
+            throw new IllegalArgumentException("To search with tags you need more than 1 tag to search with.");
+        }
         Set<Book> result = new HashSet<>();
         for (String tag : tags) {
             if ("".equals(tag) || tag == null) {
                 throw new IllegalArgumentException("Tag in search filter must not be null or empty.");
             }
             for (Book book : this.books) {
-                if (book.getTags().contains(tag)) {
+                if (book.getTags().stream().anyMatch(x -> x.toLowerCase().contains(tag.toLowerCase()))) {
                     result.add(book);
                 }
             }
@@ -50,7 +56,7 @@ public class BookRepository {
         }
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
-            if (book.getGenre().equalsIgnoreCase(genre)) {
+            if (book.getGenre().toLowerCase().equalsIgnoreCase(genre.toLowerCase())) {
                 result.add(book);
             }
         }
@@ -64,7 +70,7 @@ public class BookRepository {
         }
         Set<Book> result = new HashSet<>();
         for (Book book : this.books) {
-            if (book.getTitle().contains(title)) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
                 result.add(book);
             }
         }

@@ -2,6 +2,7 @@ package app;
 
 import app.controllers.BookController;
 import app.controllers.UserController;
+import app.entities.book.Author;
 import app.entities.book.Book;
 import app.entities.book.EBook;
 import app.entities.book.PaperBook;
@@ -14,6 +15,9 @@ import app.repositories.HistoryRepository;
 import app.repositories.QueueRepository;
 import app.repositories.UserRepository;
 import app.services.*;
+
+import java.time.LocalDate;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -29,10 +33,20 @@ public class App {
 //        BookController bookController = new BookController(searchService, bookService, borrowService, authorisationService);
 //        UserController userController = new UserController(userService, authorisationService);
 //
+//        String id = null;
+//        Author author = new Author("Tolkien", "Belgium", LocalDate.of(1896, 3, 16));
+//
 //
 //        Book eBook = new EBook("lotr", "fiction", "bla bla", "634627", "www.readme.com", "dshglqjf");
+//        eBook.addTags("smeagol", "gandalf", "tolkien", "lord", "ring");
+//        eBook.addAuthors(author);
 //        Book paperBook1 = new PaperBook("Hobbit", "fiction", "bla bla", "634627", 1);
+//        paperBook1.addTags("smeagol", "gandalf", "tolkien", "ring");
+//        paperBook1.addAuthors(author);
 //        Book paperBook2 = new PaperBook("LOTR", "fiction", "bla bla", "76523", 1);
+//        paperBook2.addTags("smeagol", "gandalf", "tolkien", "lord", "ring");
+//        paperBook2.addAuthors(author);
+//
 //
 //        Credentials credentials1 = new Credentials("username1", "password1");
 //        Credentials credentials2 = new Credentials("username2", "password2");
@@ -51,6 +65,7 @@ public class App {
 //
 //        bookRepository.addBook(eBook);
 //        bookRepository.addBook(paperBook1);
+//        bookRepository.addBook(paperBook2);
 //
 //        userController.registerUser(user1);
 //        userController.registerUser(user2);
@@ -59,36 +74,41 @@ public class App {
 //
 //        String debug = "";
 //
-//        userController.login(credentials2);
+//        id = userController.login(credentials2);
 //        userController.logout(authorisationService.getSession().getId());
-//        userController.login(credentials1);
+//        id = userController.login(credentials1);
 //        userController.logout(authorisationService.getSession().getId());
-//        userController.login(credentials3);
+//        id = userController.login(credentials3);
 //        userController.logout(authorisationService.getSession().getId());
-//        userController.login(credentials4);
-//        System.out.println(userController.getUserInfo(authorisationService.getSession().getId()));
+//        id = userController.login(credentials4);
+//        System.out.println(userController.getUserInfo(id));
 //
-//        System.out.println(bookController.getBookInfo(authorisationService.getSession().getId(), paperBook1));
-//        bookController.borrowBook(authorisationService.getSession().getId(), paperBook1);
-//        bookController.getOnlineLink(authorisationService.getSession().getId(), eBook);
-//        bookController.getDownloadLink(authorisationService.getSession().getId(), eBook);
-//        bookController.getOnlineLink(authorisationService.getSession().getId(), eBook);
-//        userController.logout(authorisationService.getSession().getId());
+//        System.out.println(bookController.getBookInfo(id, paperBook1));
+//        bookController.borrowBook(id, paperBook1);
+//        bookController.getOnlineLink(id, eBook);
+//        bookController.getDownloadLink(id, eBook);
+//        bookController.getOnlineLink(id, eBook);
+//        userController.logout(id);
 //
-//        userController.login(credentials1);
-//        bookController.getOnlineLink(authorisationService.getSession().getId(), eBook);
-//        bookController.getDownloadLink(authorisationService.getSession().getId(), eBook);
-//        bookController.getOnlineLink(authorisationService.getSession().getId(), eBook);
-//        System.out.println(bookController.getBookInfo(authorisationService.getSession().getId(), paperBook1));
-//        bookController.applyForQueue(authorisationService.getSession().getId(), paperBook1);
-//        userController.logout(authorisationService.getSession().getId());
+//        id = userController.login(credentials1);
+//        bookController.getOnlineLink(id, eBook);
+//        bookController.getDownloadLink(id, eBook);
+//        bookController.getOnlineLink(id, eBook);
+//        System.out.println(bookController.getBookInfo(id, paperBook1));
+//        bookController.applyForQueue(id, paperBook1);
+//        userController.logout(id);
 //
-//        userController.login(credentials2);
-//        bookController.applyForQueue(authorisationService.getSession().getId(), paperBook1);
-//        userController.logout(authorisationService.getSession().getId());
+//        id = userController.login(credentials2);
+//        bookController.applyForQueue(id, paperBook1);
+//        userController.logout(id);
 //
-//        userController.login(credentials4);
-//        bookController.borrowPostponement(authorisationService.getSession().getId(), paperBook1, 14);
-//        bookController.returnBook(authorisationService.getSession().getId(), paperBook1);
+//        id = userController.login(credentials4);
+//        bookController.borrowPostponement(id, paperBook1, 14);
+//        bookController.returnBook(id, paperBook1);
+//
+//        Set<Book> books = bookController.search(id, "authorName", "tolkien");
+//        for (Book book : books) {
+//            System.out.println(book.getTitle());
+//        }
     }
 }
