@@ -50,7 +50,7 @@ public class Credentials {
         return Objects.hash(this.getUsername());
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
@@ -61,7 +61,7 @@ public class Credentials {
         this.username = username;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 
