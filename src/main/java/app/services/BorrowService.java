@@ -39,6 +39,10 @@ public class BorrowService {
      * @param days Integer value representing the postponement days. Must be between 1 and 14.
      */
     public void postponeReturn(User user, Book book, int days) {
+        if (user == null) {
+            throw new IllegalArgumentException("User parameter in waitInQueue method cannot be null.");
+        }
+
         if (!this.validatePaperBook(book)) {
             throw new IllegalArgumentException("Paper book validation failed.");
         }
@@ -182,6 +186,10 @@ public class BorrowService {
                 } else {
                     if (queue.getCurrentUser() != null && !queue.getCurrentUser().equals(user) && queue.isQueueLocked()) {
                         throw new IllegalArgumentException("The queue is locked for another user.");
+                    }
+
+                    if (queue.getUsers().contains(user)) {
+                        throw new IllegalArgumentException("User is already in the queue for this book.");
                     }
                     queue.addUser(user);
                 }

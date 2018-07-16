@@ -80,4 +80,17 @@ public class BookServiceTests {
         // Then
         assertEquals("getBookInfo method does not return the correct info", result, book.toString());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfTryingToGetLinkFromNotDownloadableBookThrowsAnException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        BookService bookService = new BookService(bookRepository, historyRepository);
+        Credentials credentials = new Credentials("testUsername", "testPassword");
+        Address address = new Address("testStreet", "testCity", "testCountry");
+        User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
+        Book book = new EBook("testTitle", "testGenre", "testSummary", "testIsbn", "testReadOnlineLink");
+
+        bookService.getDownloadLink(user, book);
+    }
 }

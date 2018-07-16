@@ -131,4 +131,64 @@ public class BorrowServiceTests {
         assertNotEquals("Making postponement should add days to the return date.", initial, afterPostponement);
         assertTrue("Borrowing a book should lock the queue for the current user.", queueRepository.isQueueLocked(book));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfAlreadyBorrowedThrowsAnException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        QueueRepository queueRepository = new QueueRepository();
+        BorrowService borrowService = new BorrowService(bookRepository, historyRepository, queueRepository);
+        Credentials credentials = new Credentials("testUsername", "testPassword");
+        Address address = new Address("testStreet", "testCity", "testCountry");
+        User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
+        Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn", 1);
+
+        bookRepository.addBook(book);
+        borrowService.borrowBook(user, book);
+        borrowService.waitInQueue(user, book);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfAlreadyInQueueThrowsAnException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        QueueRepository queueRepository = new QueueRepository();
+        BorrowService borrowService = new BorrowService(bookRepository, historyRepository, queueRepository);
+        Credentials credentials = new Credentials("testUsername", "testPassword");
+        Credentials anotherCredentials = new Credentials("anotherUsername", "anotherPassword");
+        Address address = new Address("testStreet", "testCity", "testCountry");
+        User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
+        User anotherUser = new User(anotherCredentials, "anotherName", 16, Gender.FEMALE, "another@email", address, true);
+        Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn", 1);
+
+        bookRepository.addBook(book);
+        borrowService.borrowBook(user, book);
+        borrowService.waitInQueue(anotherUser, book);
+        borrowService.waitInQueue(anotherUser, book);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullBookParamThrowsAnException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        QueueRepository queueRepository = new QueueRepository();
+        BorrowService borrowService = new BorrowService(bookRepository, historyRepository, queueRepository);
+        Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn", 1);
+
+        borrowService.borrowBook(null, book);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfTryingToReturnANotBorrowedCopyThrowsAnException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        QueueRepository queueRepository = new QueueRepository();
+        BorrowService borrowService = new BorrowService(bookRepository, historyRepository, queueRepository);
+        Credentials credentials = new Credentials("testUsername", "testPassword");
+        Address address = new Address("testStreet", "testCity", "testCountry");
+        User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
+        Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn", 1);
+
+        borrowService.returnBook(user, book);
+    }
 }
