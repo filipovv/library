@@ -9,13 +9,25 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * BookRepository class serves as a repository for objects of type book in the application.
+ */
 public class BookRepository {
     private Set<Book> books;
 
+    /**
+     * Constructor for the BookRepository class.
+     */
     public BookRepository() {
         this.books = new HashSet<>();
     }
 
+    /**
+     * Method used to find all book entries by an author's name/s.
+     *
+     * @param names String varargs value to be used as search value.
+     * @return Collection of type Set containing the result of the search.
+     */
     public Set<Book> findByName(String... names) {
         if (names.length == 0) {
             throw new IllegalArgumentException("To search with names you need more than 1 name to search with.");
@@ -32,6 +44,12 @@ public class BookRepository {
         return result;
     }
 
+    /**
+     * Method used to find all book entries in the repository by their tag/s.
+     *
+     * @param tags String varargs value to be used as search values.
+     * @return Collection of type Set containing the result of the search.
+     */
     public Set<Book> findByTags(String... tags) {
         if (tags.length == 0) {
             throw new IllegalArgumentException("To search with tags you need more than 1 tag to search with.");
@@ -50,6 +68,12 @@ public class BookRepository {
         return result;
     }
 
+    /**
+     * Method used to find all book entries in the repository by their genre.
+     *
+     * @param genre String value to be used as search value.
+     * @return Collection of type Set containing the result of the search.
+     */
     public Set<Book> findByGenre(String genre) {
         if ("".equals(genre) || genre == null) {
             throw new IllegalArgumentException("Genre in search filter must not be null or empty.");
@@ -64,6 +88,12 @@ public class BookRepository {
         return result;
     }
 
+    /**
+     * Method used to find all book entries in the repository by their title.
+     *
+     * @param title String value to be used as search value.
+     * @return Collection of type Set containing the result of the search.
+     */
     public Set<Book> findByTitle(String title) {
         if ("".equals(title) || title == null) {
             throw new IllegalArgumentException("Title in search filter must not be null or empty.");
@@ -78,6 +108,11 @@ public class BookRepository {
         return result;
     }
 
+    /**
+     * Method used to ass book entries into the repository.
+     *
+     * @param book Object of type Book to be added in the repository.
+     */
     public void addBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Cannot add a null as book to repository.");
@@ -102,6 +137,11 @@ public class BookRepository {
         }
     }
 
+    /**
+     * Method used to remove a book entry from the repository.
+     *
+     * @param book Object of type Book to be removed from the repository.
+     */
     public void removeBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Book cannot be null.");
