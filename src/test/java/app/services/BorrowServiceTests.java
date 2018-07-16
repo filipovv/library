@@ -1,4 +1,4 @@
-package app.serviceTests;
+package app.services;
 
 import app.entities.book.Book;
 import app.entities.book.BorrowQueue;
@@ -13,7 +13,6 @@ import app.entities.user.User;
 import app.repositories.BookRepository;
 import app.repositories.HistoryRepository;
 import app.repositories.QueueRepository;
-import app.services.BorrowService;
 import org.junit.Test;
 
 import java.time.LocalDate;

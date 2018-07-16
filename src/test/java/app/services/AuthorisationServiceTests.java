@@ -1,11 +1,10 @@
-package app.serviceTests;
+package app.services;
 
 import app.entities.enums.Gender;
 import app.entities.user.Address;
 import app.entities.user.Credentials;
 import app.entities.user.User;
 import app.repositories.UserRepository;
-import app.services.AuthorisationService;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

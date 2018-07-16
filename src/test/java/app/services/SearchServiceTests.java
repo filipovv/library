@@ -1,10 +1,9 @@
-package app.serviceTests;
+package app.services;
 
 import app.entities.book.Author;
 import app.entities.book.Book;
 import app.entities.book.EBook;
 import app.repositories.BookRepository;
-import app.services.SearchService;
 import org.junit.Test;
 
 import java.time.LocalDate;
