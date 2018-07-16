@@ -3,9 +3,9 @@ package app.services;
 import app.entities.book.Book;
 import app.entities.book.BorrowQueue;
 import app.entities.book.PaperBook;
-import app.entities.user.BorrowBookEntry;
+import app.entities.history.BorrowBookEntry;
 import app.entities.user.User;
-import app.entities.user.UserHistory;
+import app.entities.history.History;
 import app.repositories.BookRepository;
 import app.repositories.HistoryRepository;
 import app.repositories.QueueRepository;
@@ -26,9 +26,9 @@ public class BorrowService {
             throw new IllegalArgumentException("Paper book validation failed.");
         }
 
-        for (UserHistory userHistory : this.historyRepository.getHistorySet()) {
-            if (userHistory.getUser().equals(user)) {
-                BorrowBookEntry entry = userHistory.findBorrowEntryByBook(book);
+        for (History history : this.historyRepository.getHistorySet()) {
+            if (history.getUser().equals(user)) {
+                BorrowBookEntry entry = history.findBorrowEntryByBook(book);
                 if (entry == null) {
                     throw new IllegalArgumentException("Borrow entry for that book and user does not exist.");
                 }
@@ -64,6 +64,10 @@ public class BorrowService {
     }
 
     public void waitInQueue(User user, Book book) {
+        if (user == null) {
+            throw new IllegalArgumentException("User parameter in waitInQueue method cannot be null.");
+        }
+
         if (!this.validatePaperBook(book)) {
             throw new IllegalArgumentException("Paper book validation failed.");
         }
@@ -78,7 +82,7 @@ public class BorrowService {
         } else {
             queue = new BorrowQueue((PaperBook) book);
             queue.addUser(user);
-            this.queueRepository.getQueues().add(queue);
+            this.queueRepository.addQueue(queue);
         }
     }
 
@@ -90,28 +94,28 @@ public class BorrowService {
     }
 
     public void returnBook(User user, Book book) {
+        if (user == null) {
+            throw new IllegalArgumentException("User parameter in returnBook method cannot be null.");
+        }
+
         if (!this.validatePaperBook(book)) {
             throw new IllegalArgumentException("Paper book validation failed.");
         }
 
-        USER_LOOP:
-        for (UserHistory userHistory : historyRepository.getHistorySet()) {
-            if (userHistory.getUser().equals(user)) {
-                if (userHistory.findBorrowEntryByBook(book) == null) {
+        for (History history : historyRepository.getHistorySet()) {
+            if (history.getUser().equals(user)) {
+                BorrowBookEntry borrowBookEntry = history.findBorrowEntryByBook(book);
+                if (borrowBookEntry == null) {
                     throw new IllegalArgumentException("No borrow entry with that book exists.");
                 }
-                for (BorrowBookEntry borrowBookEntry : userHistory.getCurrentlyBorrowed()) {
-                    if (borrowBookEntry.getBook().equals(book)) {
-                        userHistory.returnBook(book);
-                        BorrowQueue queue = this.queueRepository.findQueueByBook(book);
-                        if (queue != null) {
-                            User nextInQueue = queue.nextUser();
-                            if (nextInQueue != null) {
-                                this.notifyBorrowAvailable(queue);
-                            }
-                        }
 
-                        break USER_LOOP;
+                history.returnBook(book);
+                ((PaperBook) borrowBookEntry.getBook()).returnCopy();
+                BorrowQueue queue = this.queueRepository.findQueueByBook(book);
+                if (queue != null) {
+                    User nextInQueue = queue.nextUser();
+                    if (nextInQueue != null) {
+                        this.notifyBorrowAvailable(queue);
                     }
                 }
             }
@@ -119,32 +123,45 @@ public class BorrowService {
     }
 
     public void borrowBook(User user, Book book) {
+        if (user == null) {
+            throw new IllegalArgumentException("User parameter in borrowBook method cannot be null.");
+        }
+
         if (!this.validatePaperBook(book)) {
             throw new IllegalArgumentException("Paper book validation failed.");
         }
 
-        BOOK_LOOP:
         for (Book bookEntry : this.bookRepository.getBooks()) {
             if (bookEntry.equals(book)) {
                 if (((PaperBook) bookEntry).availableCopies() == 0) {
-                    throw new IllegalArgumentException("No copies available to borrow at the moment.");
+                    throw new IllegalArgumentException("No copies available to borrow at the moment. Must apply for queue.");
                 }
-                for (UserHistory userHistory : historyRepository.getHistorySet()) {
-                    if (userHistory.getUser().equals(user)) {
-                        for (BorrowBookEntry borrowBookEntry : userHistory.getCurrentlyBorrowed()) {
-                            if (borrowBookEntry.getBook().equals(book)) {
-                                throw new IllegalArgumentException("Book already borrowed.");
-                            }
-                        }
-                        userHistory.borrowBook(bookEntry);
-                        ((PaperBook) bookEntry).borrowCopy();
-                        break BOOK_LOOP;
+
+                BorrowQueue queue = this.queueRepository.findQueueByBook(book);
+                if (queue == null) {
+                    queue = new BorrowQueue((PaperBook) book);
+                    queue.addUser(user);
+                    this.queueRepository.addQueue(queue);
+                } else {
+                    if (queue.getCurrentUser() != null && !queue.getCurrentUser().equals(user) && queue.isQueueLocked()) {
+                        throw new IllegalArgumentException("The queue is locked for another user.");
                     }
+                    queue.addUser(user);
                 }
-                UserHistory userHistory = new UserHistory(user);
-                userHistory.borrowBook(book);
-                historyRepository.addUserHistory(userHistory);
-                break;
+
+                History history = this.historyRepository.getHistoryByUser(user);
+                if (history == null) {
+                    history = new History(user);
+                    this.historyRepository.addUserHistory(history);
+                }
+
+                BorrowBookEntry borrowBookEntry = history.findBorrowEntryByBook(book);
+                if (borrowBookEntry != null) {
+                    throw new IllegalArgumentException("Book already borrowed.");
+                }
+
+                history.borrowBook(bookEntry);
+                ((PaperBook) bookEntry).borrowCopy();
             }
         }
     }

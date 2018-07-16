@@ -10,8 +10,8 @@ import java.util.Set;
 public class QueueRepository {
     private Set<BorrowQueue> queues;
 
-    public QueueRepository(Set<BorrowQueue> queues) {
-        this.queues = queues;
+    public QueueRepository() {
+        this.queues = new HashSet<>();
     }
 
     public boolean isQueueLocked(Book book) {
@@ -33,7 +33,15 @@ public class QueueRepository {
         return this.queues.stream().filter(x -> x.getPaperBook().equals(book)).findFirst().orElse(null);
     }
 
+    public void addQueue(BorrowQueue queue) {
+        if (queue == null) {
+            throw new IllegalArgumentException("Cannot add null to queue repository.");
+        }
+
+        this.queues.add(queue);
+    }
+
     public Set<BorrowQueue> getQueues() {
-        return new HashSet<>(this.queues);
+        return this.queues;
     }
 }

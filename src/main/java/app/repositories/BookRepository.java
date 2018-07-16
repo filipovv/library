@@ -107,6 +107,6 @@ public class BookRepository {
     }
 
     public Set<Book> getBooks() {
-        return new HashSet<>(books);
+        return this.books;
     }
 }

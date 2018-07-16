@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Base class Book used to provide basic functionality and properties to all classes that inherit it.
+ */
 public abstract class Book {
     private String title;
     private String genre;
@@ -12,6 +15,14 @@ public abstract class Book {
     private Set<String> tags;
     private Set<Author> authors;
 
+    /**
+     * Costructor for base class Book
+     *
+     * @param title   The title of the book
+     * @param genre   The genre of the book
+     * @param summary A short summery for the book
+     * @param isbn    ISBN of the book
+     */
     protected Book(String title, String genre, String summary, String isbn) {
         this.setTitle(title);
         this.setGenre(genre);
@@ -21,6 +32,11 @@ public abstract class Book {
         this.authors = new HashSet<>();
     }
 
+    /**
+     * Method meant to be overwritten by the child classes. Used to receive the type of the book.
+     *
+     * @return String value, representing the book type.
+     */
     protected abstract String getBookType();
 
     @Override
@@ -66,10 +82,13 @@ public abstract class Book {
     }
 
     public String getSummary() {
-        return summary;
+        return this.summary;
     }
 
     private void setSummary(String summary) {
+        if ("".equals(summary) || summary == null) {
+            throw new IllegalArgumentException("Summary of the book cannot be set to null or empty.");
+        }
         this.summary = summary;
     }
 
@@ -85,7 +104,7 @@ public abstract class Book {
     }
 
     public Set<String> getTags() {
-        return new HashSet<>(this.tags);
+        return this.tags;
     }
 
     private void addTags(String... tags) {
@@ -99,7 +118,7 @@ public abstract class Book {
     }
 
     public Set<Author> getAuthors() {
-        return new HashSet<>(this.authors);
+        return this.authors;
     }
 
     private void addAuthors(Author... authors) {

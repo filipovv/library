@@ -1,10 +1,20 @@
 package app.entities.user;
 
+/**
+ * Address class defines the properties of an address
+ */
 public class Address {
     private String street;
     private String city;
     private String country;
 
+    /**
+     * Constructor for the Address class
+     *
+     * @param street  The street in the address
+     * @param city    The city this address is located
+     * @param country The country this address is located
+     */
     public Address(String street, String city, String country) {
         this.setStreet(street);
         this.setCity(city);

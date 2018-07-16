@@ -1,4 +1,4 @@
-package app;
+package app.entities;
 
 import app.entities.user.User;
 

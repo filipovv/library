@@ -1,6 +1,6 @@
 package app.services;
 
-import app.Session;
+import app.entities.Session;
 import app.entities.user.Credentials;
 import app.entities.user.User;
 import app.repositories.UserRepository;
@@ -11,9 +11,8 @@ public class AuthorisationService {
     private UserRepository userRepository;
     private Session session;
 
-    public AuthorisationService(UserRepository userRepository, Session session) {
+    public AuthorisationService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.session = session;
     }
 
     public void deleteCurrentSession() {

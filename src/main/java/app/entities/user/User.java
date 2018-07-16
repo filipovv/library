@@ -4,6 +4,9 @@ import app.entities.enums.Gender;
 
 import java.util.Objects;
 
+/**
+ * User class defines the properties of an object of type User
+ */
 public class User {
     private Credentials credentials;
     private String name;
@@ -13,6 +16,17 @@ public class User {
     private Address address;
     private boolean agreedGdpr;
 
+    /**
+     * Constructor for the User class
+     *
+     * @param credentials The credentials of the user
+     * @param name        The name of the user
+     * @param age         The age of the user
+     * @param gender      The gender of the user
+     * @param email       The email address of the user
+     * @param address     The Address of the user
+     * @param agreedGdpr  Does the user agree to the GDPR
+     */
     public User(Credentials credentials, String name, int age, Gender gender, String email, Address address, boolean agreedGdpr) {
         this.setCredentials(credentials);
         this.setName(name);

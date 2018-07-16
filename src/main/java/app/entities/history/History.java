@@ -1,22 +1,37 @@
-package app.entities.user;
+package app.entities.history;
 
 import app.entities.book.Book;
 import app.entities.enums.Status;
+import app.entities.user.User;
 
 import java.time.LocalDate;
 import java.util.*;
 
-public class UserHistory {
+/**
+ * History class defines the properties and functionality of an object of type History.
+ * Provides information about the user, his completed history and the currently borrowed books.
+ */
+public class History {
     private User user;
     private List<HistoryEntry> historyEntries;
     private Set<BorrowBookEntry> currentlyBorrowed;
 
-    public UserHistory(User user) {
+    /**
+     * Constructor for the History class
+     *
+     * @param user This is the user this history is for
+     */
+    public History(User user) {
         this.setUser(user);
         this.historyEntries = new LinkedList<>();
         this.currentlyBorrowed = new HashSet<>();
     }
 
+    /**
+     * Method used to move a currently borrowed book the the completed history
+     *
+     * @param book Object of type Book to be moved for cirrently borrowed to a history entry.
+     */
     public void returnBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Book trying to return cannot be null.");
@@ -31,6 +46,12 @@ public class UserHistory {
         this.historyEntries.add(historyEntry);
     }
 
+    /**
+     * Method used to add an entry to the completed history
+     *
+     * @param book   Object of type Book to be added to the completed history
+     * @param status Status enumeration for the type of the history entry
+     */
     public void addToHistory(Book book, Status status) {
         if (book == null) {
             throw new IllegalArgumentException("Book trying to add in history cannot be null.");
@@ -40,6 +61,11 @@ public class UserHistory {
         this.historyEntries.add(entry);
     }
 
+    /**
+     * Method used to add a book to the currently borrowed
+     *
+     * @param book Object of type Book to be added to the currently borrowed
+     */
     public void borrowBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Book trying to borrow cannot be null.");
@@ -52,6 +78,12 @@ public class UserHistory {
         this.currentlyBorrowed.add(entry);
     }
 
+    /**
+     * Method used to find a borrow entry in the currently borrowed by a book
+     *
+     * @param book Object of type Book to be used as search param
+     * @return BorrowBookEntry type representing the borrow entry in the currently borrowed books
+     */
     public BorrowBookEntry findBorrowEntryByBook(Book book) {
         BorrowBookEntry borrowBookEntry = this.currentlyBorrowed.stream()
                 .filter(x -> x.getBook().equals(book))
@@ -73,10 +105,10 @@ public class UserHistory {
     }
 
     public List<HistoryEntry> getHistoryEntries() {
-        return new LinkedList<>(this.historyEntries);
+        return this.historyEntries;
     }
 
     public Set<BorrowBookEntry> getCurrentlyBorrowed() {
-        return new HashSet<>(this.currentlyBorrowed);
+        return this.currentlyBorrowed;
     }
 }

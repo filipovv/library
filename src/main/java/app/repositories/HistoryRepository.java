@@ -1,45 +1,43 @@
 package app.repositories;
 
 import app.entities.user.User;
-import app.entities.user.UserHistory;
+import app.entities.history.History;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class HistoryRepository {
-    private Set<UserHistory> historySet;
+    private Set<History> historySet;
 
     public HistoryRepository() {
         this.historySet = new HashSet<>();
     }
 
-    public void addUserHistory(UserHistory history) {
+    public void addUserHistory(History history) {
         if (history == null) {
             throw new IllegalArgumentException("Cannot add null to history repository.");
         }
         this.historySet.add(history);
     }
 
-    public UserHistory getHistoryByUser(User user) {
+    public History getHistoryByUser(User user) {
         if (user == null) {
             throw new IllegalArgumentException("Cannot search history for null user.");
         }
 
-        UserHistory entry = null;
+        History entry = null;
 
-        for (UserHistory userHistory : historySet) {
-            if (userHistory.getUser().equals(user)) {
-                entry = userHistory;
+        for (History history : historySet) {
+            if (history.getUser().equals(user)) {
+                entry = history;
                 break;
             }
         }
-        if (entry == null) {
-            throw new IllegalArgumentException("User does not have history yet.");
-        }
+
         return entry;
     }
 
-    public Set<UserHistory> getHistorySet() {
+    public Set<History> getHistorySet() {
         return this.historySet;
     }
 }

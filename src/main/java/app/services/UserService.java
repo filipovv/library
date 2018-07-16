@@ -1,8 +1,8 @@
 package app.services;
 
-import app.entities.user.HistoryEntry;
+import app.entities.history.HistoryEntry;
 import app.entities.user.User;
-import app.entities.user.UserHistory;
+import app.entities.history.History;
 import app.repositories.HistoryRepository;
 
 import java.util.LinkedList;
@@ -20,8 +20,8 @@ public class UserService {
             throw new IllegalArgumentException("User must not be null.");
         }
 
-        UserHistory userHistory = this.historyRepository.getHistoryByUser(user);
-        List<HistoryEntry> entries = new LinkedList<>(userHistory.getHistoryEntries());
+        History history = this.historyRepository.getHistoryByUser(user);
+        List<HistoryEntry> entries = new LinkedList<>(history.getHistoryEntries());
         StringBuilder sb = new StringBuilder();
         sb.append("-- User History --").append(System.lineSeparator());
         for (HistoryEntry entry : entries) {

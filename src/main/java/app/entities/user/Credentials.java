@@ -2,15 +2,30 @@ package app.entities.user;
 
 import java.util.Objects;
 
+/**
+ * Credentials class defines the properties of authorisation credentials of a user
+ */
 public class Credentials {
     private String username;
     private String password;
 
+    /**
+     * Constructor for the credentials of the user
+     *
+     * @param username The username of the user
+     * @param password The password of the user
+     */
     public Credentials(String username, String password) {
         this.setUsername(username);
         this.setPassword(password);
     }
 
+    /**
+     * Method used to verify that the credentials match as the ones provided
+     *
+     * @param credentials Object of type Credentials to be verified
+     * @return Boolean value representing if the credentials match
+     */
     public boolean verify(Credentials credentials) {
         return this.username.equals(credentials.getUsername()) && this.password.equals(credentials.getPassword());
     }

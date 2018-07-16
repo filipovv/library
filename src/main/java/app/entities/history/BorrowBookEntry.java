@@ -1,21 +1,34 @@
-package app.entities.user;
+package app.entities.history;
 
 import app.entities.book.Book;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * BorrowBookEntry class defines the properties and functionality of a borrowing entry in the user history
+ */
 public class BorrowBookEntry {
     private Book book;
     private LocalDate borrowDate;
     private LocalDate returnDate;
 
-    public BorrowBookEntry(Book book) {
+    /**
+     * Constructor of the BorrowBookEntry
+     *
+     * @param book The book that is currently borrowed in this entry
+     */
+    BorrowBookEntry(Book book) {
         this.setBook(book);
         this.setBorrowDate();
         this.setReturnDate();
     }
 
+    /**
+     * Method used to add a postponement to the return date of this borrow entry
+     *
+     * @param postponeDays Integer value to be added as postponement to the return date
+     */
     public void postpone(int postponeDays) {
         if (postponeDays > 14 || postponeDays <= 0) {
             throw new IllegalArgumentException("Postponement must be between 1 and 14 days.");
@@ -60,9 +73,6 @@ public class BorrowBookEntry {
     }
 
     private void setBorrowDate() {
-        if (borrowDate == null) {
-            throw new IllegalArgumentException("Borrow date cannot be set to null.");
-        }
         this.borrowDate = LocalDate.now();
     }
 
@@ -71,9 +81,6 @@ public class BorrowBookEntry {
     }
 
     private void setReturnDate() {
-        if (returnDate == null) {
-            throw new IllegalArgumentException("Return date cannot be set to null.");
-        }
         this.returnDate = getBorrowDate().plusDays(14);
     }
 }

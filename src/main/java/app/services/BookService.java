@@ -2,13 +2,19 @@ package app.services;
 
 import app.entities.book.Book;
 import app.entities.book.EBook;
+import app.entities.enums.Status;
+import app.entities.user.User;
+import app.entities.history.History;
 import app.repositories.BookRepository;
+import app.repositories.HistoryRepository;
 
 public class BookService {
     private BookRepository bookRepository;
+    private HistoryRepository historyRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, HistoryRepository historyRepository) {
         this.bookRepository = bookRepository;
+        this.historyRepository = historyRepository;
     }
 
     private boolean validateEBook(Book book) {
@@ -28,7 +34,7 @@ public class BookService {
         return flag;
     }
 
-    public String getDownloadLink(Book book) {
+    public String getDownloadLink(User user, Book book) {
         if (!this.validateEBook(book)) {
             throw new IllegalArgumentException("EBook validation failed.");
         }
@@ -42,7 +48,16 @@ public class BookService {
                     if (((EBook) entry).getDownloadLink() == null) {
                         throw new IllegalArgumentException("Book does not have a download link available.");
                     }
+
                     result = ((EBook) entry).getDownloadLink();
+                    History history = this.historyRepository.getHistoryByUser(user);
+                    if (history == null) {
+                        history = new History(user);
+                        this.historyRepository.addUserHistory(history);
+                    }
+
+                    history.addToHistory(book, Status.DOWNLOADED);
+                    break;
                 }
             }
         }
@@ -50,7 +65,7 @@ public class BookService {
         return result;
     }
 
-    public String getOnlineLink(Book book) {
+    public String getOnlineLink(User user, Book book) {
         if (!this.validateEBook(book)) {
             throw new IllegalArgumentException("EBook validation failed.");
         }
@@ -62,6 +77,14 @@ public class BookService {
             for (Book entry : this.bookRepository.getBooks()) {
                 if (entry.equals(book)) {
                     result = ((EBook) entry).getReadOnlineLink();
+                    History history = this.historyRepository.getHistoryByUser(user);
+                    if (history == null) {
+                        history = new History(user);
+                        this.historyRepository.addUserHistory(history);
+                    }
+
+                    history.addToHistory(book, Status.VIEWED);
+                    break;
                 }
             }
         }

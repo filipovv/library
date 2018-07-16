@@ -67,6 +67,6 @@ public class UserRepository {
     }
 
     public Set<User> getUsers() {
-        return new HashSet<>(users);
+        return this.users;
     }
 }

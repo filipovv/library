@@ -27,7 +27,8 @@ public class BookController {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
-        return this.bookService.getDownloadLink(book);
+        User user = this.authorisationService.getSession().getUser();
+        return this.bookService.getDownloadLink(user, book);
     }
 
     public String getOnlineLink(String sessionId, Book book) {
@@ -35,7 +36,8 @@ public class BookController {
             throw new IllegalArgumentException("Session Id validation failed.");
         }
 
-        return this.bookService.getOnlineLink(book);
+        User user = this.authorisationService.getSession().getUser();
+        return this.bookService.getOnlineLink(user, book);
     }
 
     public void borrowPostponement(String sessionId, Book book, int postponeDays) {

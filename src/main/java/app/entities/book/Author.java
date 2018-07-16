@@ -2,12 +2,23 @@ package app.entities.book;
 
 import java.time.LocalDate;
 
+/**
+ * Class Author provides information and properties for objects of type Author
+ */
 public class Author {
     private String name;
     private String country;
     private LocalDate dateOfBirth;
     private LocalDate dateOfDeath;
 
+    /**
+     * Constructor for the Author class
+     *
+     * @param name        The name of the author
+     * @param country     The country the author is from
+     * @param dateOfBirth The date of birth of the author
+     * @param dateOfDeath The date of the authors death
+     */
     public Author(String name, String country, LocalDate dateOfBirth, LocalDate dateOfDeath) {
         this.setName(name);
         this.setCountry(country);
@@ -15,6 +26,13 @@ public class Author {
         this.setDateOfDeath(dateOfDeath);
     }
 
+    /**
+     * Constructor for the Author class
+     *
+     * @param name        The name of the author
+     * @param country     The country the author is from
+     * @param dateOfBirth The date of birth of the author
+     */
     public Author(String name, String country, LocalDate dateOfBirth) {
         this.setName(name);
         this.setCountry(country);
