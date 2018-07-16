@@ -17,6 +17,7 @@ import app.repositories.UserRepository;
 import app.services.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 public class App {

@@ -137,7 +137,19 @@ public class BookService {
             throw new IllegalArgumentException("Book must not be null to get info for it.");
         }
 
-        // TODO: search in repository instead.
-        return book.toString();
+        String result = null;
+
+        for (Book entry : this.bookRepository.getBooks()) {
+            if (entry.equals(book)) {
+                result = entry.toString();
+                break;
+            }
+        }
+
+        if (result == null) {
+            throw new IllegalArgumentException("No such book in the repository.");
+        }
+
+        return result;
     }
 }
