@@ -17,7 +17,6 @@ public class BookServiceTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIfValidatorThrowsAnException() {
-        // Given
         BookRepository bookRepository = new BookRepository();
         HistoryRepository historyRepository = new HistoryRepository();
         BookService bookService = new BookService(bookRepository, historyRepository);
@@ -26,7 +25,6 @@ public class BookServiceTests {
         User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
         Book book = new EBook("testTitle", "testGenre", "testSummary", "testIsbn", "testReadOnlineLink", "testDownloadLink");
 
-        // When
         bookService.getOnlineLink(user, book);
     }
 

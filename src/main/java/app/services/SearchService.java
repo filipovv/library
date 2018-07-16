@@ -47,7 +47,7 @@ public class SearchService {
             case "authorname":
                 return this.searchByAuthorName(value);
             default:
-                throw new IllegalArgumentException("No such tag filer.");
+                throw new IllegalArgumentException("No such filter.");
         }
     }
 

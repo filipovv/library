@@ -46,7 +46,6 @@ public class BorrowServiceTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIfValidatorFailThrowsAnException() {
-        // Given
         BookRepository bookRepository = new BookRepository();
         HistoryRepository historyRepository = new HistoryRepository();
         QueueRepository queueRepository = new QueueRepository();
@@ -56,7 +55,6 @@ public class BorrowServiceTests {
         User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
         Book book = new EBook("testTitle", "testGenre", "testSummary", "testIsbn", "testLink");
 
-        // When
         bookRepository.addBook(book);
         borrowService.borrowBook(user, book);
     }
@@ -105,6 +103,7 @@ public class BorrowServiceTests {
         borrowService.returnBook(user, book);
         int returned = ((PaperBook) book).availableCopies();
 
+        // Then
         assertNotEquals("Returning a copy should add to the available copies for a book.", borrowed, returned);
     }
 

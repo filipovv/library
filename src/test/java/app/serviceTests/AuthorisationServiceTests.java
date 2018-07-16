@@ -33,14 +33,12 @@ public class AuthorisationServiceTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIfAlreadyRegisteredThrowsAnException() {
-        // Given
         UserRepository userRepository = new UserRepository();
         AuthorisationService authorisationService = new AuthorisationService(userRepository);
         Credentials credentials = new Credentials("testUsername", "testPassword");
         Address address = new Address("testStreet", "testCity", "testCountry");
         User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
 
-        // When
         authorisationService.registerUser(user);
         authorisationService.registerUser(user);
     }
@@ -89,12 +87,10 @@ public class AuthorisationServiceTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIfLoginWithUnknownCredentialsThrowsAnException() {
-        // Given
         UserRepository userRepository = new UserRepository();
         AuthorisationService authorisationService = new AuthorisationService(userRepository);
         Credentials credentials = new Credentials("testUsername", "testPassword");
 
-        // When
         String sessionId = authorisationService.login(credentials);
     }
 }

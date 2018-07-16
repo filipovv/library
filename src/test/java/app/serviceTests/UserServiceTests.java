@@ -52,12 +52,10 @@ public class UserServiceTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIfGetInfoForNonexistentUserThrowsException() {
-        // Given
         HistoryRepository historyRepository = new HistoryRepository();
         UserRepository userRepository = new UserRepository();
         UserService userService = new UserService(historyRepository, userRepository);
 
-        // When
         String history = userService.getHistoryByUser(null);
     }
 }
