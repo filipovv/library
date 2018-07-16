@@ -4,6 +4,7 @@ import app.entities.history.HistoryEntry;
 import app.entities.user.User;
 import app.entities.history.History;
 import app.repositories.HistoryRepository;
+import app.repositories.UserRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,14 +14,17 @@ import java.util.List;
  */
 public class UserService {
     private HistoryRepository historyRepository;
+    private UserRepository userRepository;
 
     /**
      * Constructor for the User Service
      *
      * @param historyRepository The repository for the history
+     * @param userRepository    The repository for the users
      */
-    public UserService(HistoryRepository historyRepository) {
+    public UserService(HistoryRepository historyRepository, UserRepository userRepository) {
         this.historyRepository = historyRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -35,6 +39,10 @@ public class UserService {
         }
 
         History history = this.historyRepository.getHistoryByUser(user);
+        if (history == null) {
+            history = new History(user);
+            this.historyRepository.addUserHistory(history);
+        }
         List<HistoryEntry> entries = new LinkedList<>(history.getHistoryEntries());
         StringBuilder sb = new StringBuilder();
         sb.append("-- User History --").append(System.lineSeparator());
@@ -57,7 +65,18 @@ public class UserService {
             throw new IllegalArgumentException("User must not be null.");
         }
 
-        // TODO: use user from repository instead
+        String result = null;
+
+        for (User entry : this.userRepository.getUsers()) {
+            if (entry.equals(user)) {
+                result = entry.toString();
+                break;
+            }
+        }
+
+        if (result == null) {
+            throw new IllegalArgumentException("No such user in the repository.");
+        }
         return user.toString();
     }
 }
