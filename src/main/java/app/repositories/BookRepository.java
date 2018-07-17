@@ -153,7 +153,25 @@ public class BookRepository {
             throw new IllegalArgumentException("Book does not exist in the repository.");
         }
 
-        this.books.remove(book);
+        if (book instanceof EBook) {
+            this.books.remove(book);
+        } else if (book instanceof PaperBook) {
+            Book bookToRemove = null;
+            for (Book entry : this.books) {
+                if (entry.equals(book)) {
+                    if (((PaperBook) entry).getTotalCopies() > ((PaperBook) book).getTotalCopies()) {
+                        ((PaperBook) entry).removeCopies(((PaperBook) book).getTotalCopies());
+                    } else {
+                        bookToRemove = entry;
+                    }
+
+                    break;
+                }
+            }
+            if (bookToRemove != null) {
+                this.books.remove(bookToRemove);
+            }
+        }
     }
 
     public Set<Book> getBooks() {

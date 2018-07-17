@@ -77,4 +77,26 @@ public class BookRepositoryTests {
         BookRepository bookRepository = new BookRepository();
         bookRepository.findByTitle(null);
     }
+
+    @Test
+    public void testIfRemoveBookDeductsTotalCopies() {
+        // Given
+        BookRepository bookRepository = new BookRepository();
+        Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn", 5);
+        Book bookToRemove = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn", 3);
+
+        // When
+        bookRepository.addBook(book);
+        int initial = ((PaperBook) book).getTotalCopies();
+        bookRepository.removeBook(bookToRemove);
+        int after = 0;
+        for (Book entry : bookRepository.getBooks()) {
+            if (entry.equals(book)) {
+                after = ((PaperBook) entry).getTotalCopies();
+            }
+        }
+
+        // Then
+        assertNotEquals(initial, after);
+    }
 }

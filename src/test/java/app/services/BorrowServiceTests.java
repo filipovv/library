@@ -129,6 +129,25 @@ public class BorrowServiceTests {
 
         // Then
         assertNotEquals("Making postponement should add days to the return date.", initial, afterPostponement);
+    }
+
+    @Test
+    public void testIfQueueLocksAfterBorrow() {
+        // Given
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        QueueRepository queueRepository = new QueueRepository();
+        BorrowService borrowService = new BorrowService(bookRepository, historyRepository, queueRepository);
+        Credentials credentials = new Credentials("testUsername", "testPassword");
+        Address address = new Address("testStreet", "testCity", "testCountry");
+        User user = new User(credentials, "testName", 15, Gender.MALE, "test@email", address, true);
+        Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testIsbn",1);
+
+        // When
+        bookRepository.addBook(book);
+        borrowService.borrowBook(user, book);
+
+        // Then
         assertTrue("Borrowing a book should lock the queue for the current user.", queueRepository.isQueueLocked(book));
     }
 
