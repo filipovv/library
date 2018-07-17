@@ -53,6 +53,9 @@ public class BorrowQueue {
      * @param user Object of type User to be added to the queue
      */
     public void addUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("Cannot add null as user to queue.");
+        }
         this.users.add(user);
         if (this.users.size() == 1) {
             this.setPickBookDeadline();

@@ -39,6 +39,10 @@ public class PaperBook extends Book {
      * @param copies Integer value to be added to the total number of copies
      */
     public void addCopies(int copies) {
+        if (copies <= 0) {
+            throw new IllegalArgumentException("Adding copies must be 1 or more.");
+        }
+
         this.totalCopies += copies;
     }
 

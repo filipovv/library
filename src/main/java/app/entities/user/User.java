@@ -64,7 +64,7 @@ public class User {
     }
 
     public Credentials getCredentials() {
-        return credentials;
+        return this.credentials;
     }
 
     private void setCredentials(Credentials credentials) {
@@ -108,7 +108,7 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     private void setEmail(String email) {
@@ -126,7 +126,7 @@ public class User {
     }
 
     public boolean isAgreedGdpr() {
-        return agreedGdpr;
+        return this.agreedGdpr;
     }
 
     private void setAgreedGdpr(boolean agreedGdpr) {

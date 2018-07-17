@@ -27,6 +27,9 @@ public class Credentials {
      * @return Boolean value representing if the credentials match
      */
     public boolean verify(Credentials credentials) {
+        if (credentials == null) {
+            throw new IllegalArgumentException("Credentials you try to verify cannot be null.");
+        }
         return this.username.equals(credentials.getUsername()) && this.password.equals(credentials.getPassword());
     }
 
@@ -51,7 +54,7 @@ public class Credentials {
     }
 
     String getUsername() {
-        return username;
+        return this.username;
     }
 
     private void setUsername(String username) {
@@ -62,7 +65,7 @@ public class Credentials {
     }
 
     private String getPassword() {
-        return password;
+        return this.password;
     }
 
     private void setPassword(String password) {

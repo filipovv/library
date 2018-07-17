@@ -59,6 +59,10 @@ public class AuthorisationService {
      * @param user Object of type User to be registered.
      */
     public void registerUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User you try to register cannot be null.");
+        }
+
         if (this.userRepository.isAlreadyRegistered(user)) {
             throw new IllegalArgumentException("User with that username or email already registered.");
         }
@@ -66,6 +70,7 @@ public class AuthorisationService {
         if (!user.isAgreedGdpr()) {
             throw new IllegalArgumentException("User must agree to GDPR to be able to register.");
         }
+
         this.userRepository.addUser(user);
     }
 

@@ -81,6 +81,7 @@ public class UserRepository {
         if (user == null) {
             throw new IllegalArgumentException("User parameter cannot be null to complete operation.");
         }
+
         boolean isRegistered = false;
         for (User entry : this.users) {
             if (entry.getCredentials().equals(user.getCredentials()) || entry.getEmail().equals(user.getEmail())) {
@@ -88,6 +89,7 @@ public class UserRepository {
                 break;
             }
         }
+
         return isRegistered;
     }
 

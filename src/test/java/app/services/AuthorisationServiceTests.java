@@ -92,4 +92,11 @@ public class AuthorisationServiceTests {
 
         String sessionId = authorisationService.login(credentials);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfTryingToRegisterANullUserThrowsException() {
+        UserRepository userRepository = new UserRepository();
+        AuthorisationService authorisationService = new AuthorisationService(userRepository);
+        authorisationService.registerUser(null);
+    }
 }

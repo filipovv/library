@@ -57,6 +57,10 @@ public class History {
             throw new IllegalArgumentException("Book trying to add in history cannot be null.");
         }
 
+        if (status == null) {
+            throw new IllegalArgumentException("Status to be set as history status cannot be null.");
+        }
+
         HistoryEntry entry = new HistoryEntry(status, book, LocalDate.now());
         this.historyEntries.add(entry);
     }
@@ -70,6 +74,7 @@ public class History {
         if (book == null) {
             throw new IllegalArgumentException("Book trying to borrow cannot be null.");
         }
+
         BorrowBookEntry entry = this.findBorrowEntryByBook(book);
         if (entry != null) {
             throw new IllegalArgumentException("Book already borrowed.");
@@ -85,6 +90,10 @@ public class History {
      * @return BorrowBookEntry type representing the borrow entry in the currently borrowed books
      */
     public BorrowBookEntry findBorrowEntryByBook(Book book) {
+        if (book == null) {
+            throw new IllegalArgumentException("Book trying to find borrow entry be null.");
+        }
+
         BorrowBookEntry borrowBookEntry = this.currentlyBorrowed.stream()
                 .filter(x -> x.getBook().equals(book))
                 .findFirst()
@@ -101,6 +110,7 @@ public class History {
         if (user == null) {
             throw new IllegalArgumentException("User in history cannot be set to null.");
         }
+
         this.user = user;
     }
 

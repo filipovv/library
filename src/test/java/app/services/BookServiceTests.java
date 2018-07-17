@@ -93,4 +93,24 @@ public class BookServiceTests {
 
         bookService.getDownloadLink(user, book);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsUserInGetDownloadLinkThrowsException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        BookService bookService = new BookService(bookRepository, historyRepository);
+        Book book = new EBook("testTitle", "testGenre", "testSummary", "testIsbn", "testReadOnlineLink", "testDownloadLink");
+        bookRepository.addBook(book);
+        bookService.getDownloadLink(null, book);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsUserInGetOnlineLinkThrowsException() {
+        BookRepository bookRepository = new BookRepository();
+        HistoryRepository historyRepository = new HistoryRepository();
+        BookService bookService = new BookService(bookRepository, historyRepository);
+        Book book = new EBook("testTitle", "testGenre", "testSummary", "testIsbn", "testReadOnlineLink");
+        bookRepository.addBook(book);
+        bookService.getOnlineLink(null, book);
+    }
 }

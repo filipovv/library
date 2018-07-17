@@ -30,6 +30,7 @@ public class QueueRepository {
         if (book == null) {
             throw new IllegalArgumentException("Book parameter cannot be null to complete operation.");
         }
+
         BorrowQueue queue = this.findQueueByBook(book);
         if (queue == null) {
             throw new IllegalArgumentException("No queue for this book.");
@@ -49,6 +50,7 @@ public class QueueRepository {
         if (book == null) {
             throw new IllegalArgumentException("Book parameter cannot be null to complete operation.");
         }
+
         return this.queues.stream().filter(x -> x.getPaperBook().equals(book)).findFirst().orElse(null);
     }
 

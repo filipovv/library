@@ -61,6 +61,10 @@ public class BookService {
      * @return String value representing the download link of the eBook
      */
     public String getDownloadLink(User user, Book book) {
+        if (user == null) {
+            throw new IllegalArgumentException("User trying to get download link cannot be null.");
+        }
+
         if (!this.validateEBook(book)) {
             throw new IllegalArgumentException("EBook validation failed.");
         }
@@ -100,6 +104,10 @@ public class BookService {
      * @return String value representing the read-online link of the eBook
      */
     public String getOnlineLink(User user, Book book) {
+        if (user == null) {
+            throw new IllegalArgumentException("User trying to get download link cannot be null.");
+        }
+
         if (!this.validateEBook(book)) {
             throw new IllegalArgumentException("EBook validation failed.");
         }
