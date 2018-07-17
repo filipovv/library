@@ -29,7 +29,7 @@ public class BookRepository {
      * @return Collection of type Set containing the result of the search.
      */
     public Set<Book> findByName(String... names) {
-        if (names.length == 0) {
+        if (names == null || names.length == 0) {
             throw new IllegalArgumentException("To search with names you need more than 1 name to search with.");
         }
         Set<Book> result = new HashSet<>();
@@ -51,7 +51,7 @@ public class BookRepository {
      * @return Collection of type Set containing the result of the search.
      */
     public Set<Book> findByTags(String... tags) {
-        if (tags.length == 0) {
+        if (tags == null || tags.length == 0) {
             throw new IllegalArgumentException("To search with tags you need more than 1 tag to search with.");
         }
         Set<Book> result = new HashSet<>();

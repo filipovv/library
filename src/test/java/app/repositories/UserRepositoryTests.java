@@ -81,4 +81,28 @@ public class UserRepositoryTests {
         // Then
         assertTrue(userRepository.isAlreadyRegistered(user));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInAddUserThrowsException() {
+        UserRepository userRepository = new UserRepository();
+        userRepository.addUser(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInRemoveUserThrowsException() {
+        UserRepository userRepository = new UserRepository();
+        userRepository.removeUser(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInFindUserThrowsException() {
+        UserRepository userRepository = new UserRepository();
+        userRepository.findUserByCredentials(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInIsAlreadyRegisteredThrowsException() {
+        UserRepository userRepository = new UserRepository();
+        userRepository.isAlreadyRegistered(null);
+    }
 }

@@ -53,4 +53,28 @@ public class BookRepositoryTests {
         bookRepository.addBook(book);
         bookRepository.addBook(book);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInFindByAuthorNameThrowsAndException() {
+        BookRepository bookRepository = new BookRepository();
+        bookRepository.findByName(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInFindByGenreThrowsAndException() {
+        BookRepository bookRepository = new BookRepository();
+        bookRepository.findByGenre(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInFindByTagsThrowsAndException() {
+        BookRepository bookRepository = new BookRepository();
+        bookRepository.findByTags(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInFindByTitleThrowsAndException() {
+        BookRepository bookRepository = new BookRepository();
+        bookRepository.findByTitle(null);
+    }
 }

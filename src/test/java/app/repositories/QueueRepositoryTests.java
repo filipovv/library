@@ -47,4 +47,22 @@ public class QueueRepositoryTests {
         Book book = new PaperBook("testTitle", "testGenre", "testSummary", "testisbn", 1);
         queueRepository.isQueueLocked(book);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamThrowsAnExceptionInLockedChecked() {
+        QueueRepository queueRepository = new QueueRepository();
+        queueRepository.isQueueLocked(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInFindQueueByBookThrowsException() {
+        QueueRepository queueRepository = new QueueRepository();
+        queueRepository.findQueueByBook(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIfNullAsParamInAddQueueThrowsException() {
+        QueueRepository queueRepository = new QueueRepository();
+        queueRepository.addQueue(null);
+    }
 }
