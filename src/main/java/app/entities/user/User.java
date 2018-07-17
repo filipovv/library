@@ -74,8 +74,8 @@ public class User {
         this.credentials = credentials;
     }
 
-    public String getName() {
-        return name;
+    private String getName() {
+        return this.name;
     }
 
     private void setName(String name) {
@@ -85,8 +85,8 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    private int getAge() {
+        return this.age;
     }
 
     private void setAge(int age) {
@@ -96,8 +96,8 @@ public class User {
         this.age = age;
     }
 
-    public Gender getGender() {
-        return gender;
+    private Gender getGender() {
+        return this.gender;
     }
 
     private void setGender(Gender gender) {
@@ -116,10 +116,6 @@ public class User {
             throw new IllegalArgumentException("Email of user cannot be set to null or empty.");
         }
         this.email = email;
-    }
-
-    public Address getAddress() {
-        return address;
     }
 
     private void setAddress(Address address) {

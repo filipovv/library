@@ -68,7 +68,7 @@ public class BorrowBookEntry {
         this.book = book;
     }
 
-    public LocalDate getBorrowDate() {
+    private LocalDate getBorrowDate() {
         return this.borrowDate;
     }
 

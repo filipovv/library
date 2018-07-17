@@ -38,7 +38,7 @@ public class BookController {
      *
      * @param sessionId String value of the session id, provided from the client to be verified with the current session.
      * @param book      Object of type Book to be used as search value
-     * @return
+     * @return String value representing the download link of the eBook
      */
     public String getDownloadLink(String sessionId, Book book) {
         if (!this.authorisationService.validateSession(sessionId)) {
@@ -54,7 +54,7 @@ public class BookController {
      *
      * @param sessionId String value of the session id, provided from the client to be verified with the current session.
      * @param book      Object of type Book to be used as search value
-     * @return
+     * @return String value representing the read-online link for the eBook
      */
     public String getOnlineLink(String sessionId, Book book) {
         if (!this.authorisationService.validateSession(sessionId)) {

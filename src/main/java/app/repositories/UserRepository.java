@@ -39,7 +39,7 @@ public class UserRepository {
      *
      * @param user Object of the User to be removed from the user repositoty.
      */
-    public void removeUser(User user) {
+    void removeUser(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
         } else if (!this.users.contains(user)) {

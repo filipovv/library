@@ -26,7 +26,7 @@ public class SearchService {
      *
      * @param filter String value to be used as the filter for the search
      * @param value  String value to be used as the search values
-     * @return
+     * @return Collection of type Set containing the search result
      */
     public Set<Book> search(String filter, String value) {
         if ("".equals(filter) || filter == null) {

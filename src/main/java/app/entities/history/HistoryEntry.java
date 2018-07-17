@@ -39,7 +39,7 @@ public class HistoryEntry {
     }
 
     public Book getBook() {
-        return book;
+        return this.book;
     }
 
     private void setBook(Book book) {
@@ -50,7 +50,7 @@ public class HistoryEntry {
     }
 
     public LocalDate getEntryDate() {
-        return entryDate;
+        return this.entryDate;
     }
 
     private void setEntryDate(LocalDate entryDate) {

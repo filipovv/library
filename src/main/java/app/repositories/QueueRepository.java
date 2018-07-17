@@ -65,7 +65,7 @@ public class QueueRepository {
         this.queues.add(queue);
     }
 
-    public Set<BorrowQueue> getQueues() {
+    Set<BorrowQueue> getQueues() {
         return this.queues;
     }
 }

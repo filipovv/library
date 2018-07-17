@@ -20,7 +20,7 @@ public class PaperBook extends Book {
      */
     public PaperBook(String title, String genre, String summary, String isbn, int totalCopies) {
         super(title, genre, summary, isbn);
-        this.totalCopies = totalCopies;
+        this.setTotalCopies(totalCopies);
         this.setBorrowedCopies();
     }
 
@@ -48,6 +48,10 @@ public class PaperBook extends Book {
      * @param copies Integer value to be deducted from the total amount
      */
     public void removeCopies(int copies) {
+        if (copies <= 0) {
+            throw new IllegalArgumentException("Cannot remove 0 or less copies from a book.");
+        }
+
         if (this.totalCopies < copies) {
             throw new IllegalArgumentException("Cannot remove more copies than the total amount.");
         }
@@ -104,11 +108,10 @@ public class PaperBook extends Book {
     }
 
     private void setTotalCopies(int totalCopies) {
+        if (totalCopies <= 0) {
+            throw new IllegalArgumentException("Paper book must have 1 or more copies of it.");
+        }
         this.totalCopies = totalCopies;
-    }
-
-    public int getBorrowedCopies() {
-        return this.borrowedCopies;
     }
 
     private void setBorrowedCopies() {

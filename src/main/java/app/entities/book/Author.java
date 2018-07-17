@@ -50,10 +50,6 @@ public class Author {
         this.name = name;
     }
 
-    public String getCountry() {
-        return this.country;
-    }
-
     private void setCountry(String country) {
         if ("".equals(country) || country == null) {
             throw new IllegalArgumentException("Country of Author cannot be set to null or empty.");
@@ -61,19 +57,11 @@ public class Author {
         this.country = country;
     }
 
-    public LocalDate getDateOfBirth() {
-        return this.dateOfBirth;
-    }
-
     private void setDateOfBirth(LocalDate dateOfBirth) {
         if (dateOfBirth == null) {
             throw new IllegalArgumentException("Date of birth of the author cannot be null.");
         }
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public LocalDate getDateOfDeath() {
-        return this.dateOfDeath;
     }
 
     private void setDateOfDeath(LocalDate dateOfDeath) {

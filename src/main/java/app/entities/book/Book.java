@@ -81,10 +81,6 @@ public abstract class Book {
         this.genre = genre;
     }
 
-    public String getSummary() {
-        return this.summary;
-    }
-
     private void setSummary(String summary) {
         if ("".equals(summary) || summary == null) {
             throw new IllegalArgumentException("Summary of the book cannot be set to null or empty.");
@@ -92,7 +88,7 @@ public abstract class Book {
         this.summary = summary;
     }
 
-    public String getIsbn() {
+    String getIsbn() {
         return this.isbn;
     }
 

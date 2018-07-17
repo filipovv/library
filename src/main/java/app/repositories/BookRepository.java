@@ -146,7 +146,7 @@ public class BookRepository {
      *
      * @param book Object of type Book to be removed from the repository.
      */
-    public void removeBook(Book book) {
+    void removeBook(Book book) {
         if (book == null) {
             throw new IllegalArgumentException("Book cannot be null.");
         } else if (!this.books.contains(book)) {

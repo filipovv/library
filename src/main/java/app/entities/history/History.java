@@ -107,8 +107,4 @@ public class History {
     public List<HistoryEntry> getHistoryEntries() {
         return this.historyEntries;
     }
-
-    public Set<BorrowBookEntry> getCurrentlyBorrowed() {
-        return this.currentlyBorrowed;
-    }
 }
