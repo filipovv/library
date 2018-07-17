@@ -28,7 +28,7 @@ public class HistoryEntry {
     }
 
     public Status getStatus() {
-        return status;
+        return this.status;
     }
 
     private void setStatus(Status status) {
