@@ -168,7 +168,7 @@ public class BorrowServiceTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testIfNullBookParamThrowsAnException() {
+    public void testIfNullUserParamThrowsAnException() {
         BookRepository bookRepository = new BookRepository();
         HistoryRepository historyRepository = new HistoryRepository();
         QueueRepository queueRepository = new QueueRepository();

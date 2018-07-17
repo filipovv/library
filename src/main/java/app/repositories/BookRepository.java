@@ -117,10 +117,12 @@ public class BookRepository {
         if (book == null) {
             throw new IllegalArgumentException("Cannot add a null as book to repository.");
         }
+
         if (this.books.contains(book)) {
             if (book instanceof EBook) {
                 throw new IllegalArgumentException("EBook already exists in the repository.");
             }
+
             Book newBook = null;
             for (Book entry : this.books) {
                 if (entry.equals(book)) {
@@ -129,9 +131,11 @@ public class BookRepository {
                 }
             }
 
-            this.books.remove(newBook);
-            ((PaperBook) newBook).addCopies(1);
-            this.books.add(newBook);
+            if (newBook != null) {
+                this.books.remove(newBook);
+                ((PaperBook) newBook).addCopies(((PaperBook) book).getTotalCopies());
+                this.books.add(newBook);
+            }
         } else {
             this.books.add(book);
         }

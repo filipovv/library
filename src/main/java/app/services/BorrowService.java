@@ -113,11 +113,13 @@ public class BorrowService {
             this.queueRepository.addQueue(queue);
         }
     }
-
-    public String notifyBorrowAvailable(BorrowQueue borrowQueue) {
-        return String.format("The book %s is available for borrow until %s!%n",
-                borrowQueue.getPaperBook().getTitle(), borrowQueue.getPickBookDeadline());
-    }
+/*
+                        Part of code available when I add notification functionality =D
+ */
+//    public String notifyBorrowAvailable(BorrowQueue borrowQueue) {
+//        return String.format("The book %s is available for borrow until %s!%n",
+//                borrowQueue.getPaperBook().getTitle(), borrowQueue.getPickBookDeadline());
+//    }
 
     /**
      * Method used to return a certain book by a given user.
@@ -149,7 +151,10 @@ public class BorrowService {
                 if (queue != null) {
                     User nextInQueue = queue.nextUser();
                     if (nextInQueue != null) {
-                        this.notifyBorrowAvailable(queue);
+                        /*
+                        Part of code available when I add notification functionality =D
+                         */
+//                        this.notifyBorrowAvailable(queue);
                     }
                 }
             }
